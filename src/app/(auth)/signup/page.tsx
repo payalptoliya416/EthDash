@@ -83,7 +83,7 @@ const SignupPage: React.FC = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className="mt-7">
+            <Form className="mt-7 mx-11">
               {/* Name + Surname */}
               <div className="flex lg:items-center gap-5 mb-4 flex-col lg:flex-row">
                 <div className="lg:w-1/2">
