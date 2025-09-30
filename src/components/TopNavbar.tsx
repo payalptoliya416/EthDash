@@ -8,7 +8,7 @@ interface TopNavbarProps {
 
 export default function TopNavbar({ toggleSidebar }: TopNavbarProps) {
   return (
-    <header className="w-full bg-white shadow flex justify-between items-center px-6 py-3 md:py-5 sticky top-0 z-[99]">
+    <header className="w-full bg-white shadow flex justify-between items-center px-6 py-3 md:py-5 sticky top-0 z-[9]">
       <div className="flex items-center gap-4">
         <button className="text-gray-600 lg:hidden" onClick={toggleSidebar}>
           <Bars3BottomLeftIcon className="w-7 h-7" />
