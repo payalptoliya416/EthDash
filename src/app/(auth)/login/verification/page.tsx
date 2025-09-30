@@ -1,0 +1,174 @@
+"use client";
+
+import { Formik, Form, Field, FormikHelpers } from "formik";
+import * as Yup from "yup";
+import toast, { Toaster } from "react-hot-toast";
+import { JSX } from "react";
+// import { useRouter } from "next/navigation";
+
+// 🔹 Define form values type
+interface VerificationFormValues {
+  otp: string[];
+}
+
+export default function Verification(): JSX.Element {
+  // const router = useRouter();
+
+  // 🔹 Validation Schema
+  const validationSchema = Yup.object({
+    otp: Yup.array()
+      .of(Yup.string().matches(/^[0-9]$/, "Must be a digit").required("Required"))
+      .length(5, "OTP must be 5 digits"),
+  });
+
+  // 🔹 Initial Values
+  const initialValues: VerificationFormValues = {
+    otp: ["", "", "", "", ""],
+  };
+
+  // 🔹 Handle Submit
+  const handleSubmit = (
+    values: VerificationFormValues,
+    { resetForm }: FormikHelpers<VerificationFormValues>
+  ): void => {
+    const otpCode = values.otp.join("");
+    if (otpCode.length === 5) {
+      toast.success("OTP Verified Successfully");
+
+      // setTimeout(() => {
+      //   router.push("/dashboard");
+      // }, 1500);
+
+      resetForm();
+    } else {
+      toast.error("Please enter complete OTP ❌");
+    }
+  };
+
+  // 🔹 Handle OTP Input
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    setFieldValue: (field: string, value: any) => void
+  ) => {
+    const { value } = e.target;
+    if (/^[0-9]$/.test(value)) {
+      setFieldValue(`otp[${index}]`, value);
+      // focus next input
+      const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
+      if (nextInput) nextInput.focus();
+    } else if (value === "") {
+      setFieldValue(`otp[${index}]`, "");
+    }
+  };
+
+  // 🔹 Handle Backspace Navigation
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number,
+    setFieldValue: (field: string, value: any) => void,
+    values: VerificationFormValues
+  ) => {
+    if (e.key === "Backspace") {
+      if (values.otp[index] === "") {
+        const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement | null;
+        if (prevInput) prevInput.focus();
+      } else {
+        setFieldValue(`otp[${index}]`, "");
+      }
+    }
+  };
+
+  return (
+    <>
+      <Toaster position="top-right" />
+      <div className="min-h-screen flex flex-col md:flex-row">
+        {/* Left Section */}
+        <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between ">
+          <div className="p-[35px] pb-0 mb-[43px]">
+            <a href="javascript:void(0)">
+              <img src="/logo.png" alt="Logo" />
+            </a>
+          </div>
+          <div className="text-center px-6 sm:px-10 lg:px-16 xl:px-[90px]">
+            <h1 className="text-primary text-2xl sm:text-[28px] font-semibold leading-[34px] mb-[15px]">
+              Google Authenticator Code
+            </h1>
+            <p className="text-secondary text-sm sm:text-base lg:text-xl font-normal">
+              Enter 5-digit Google Authenticator code to continue.
+            </p>
+
+            {/* Formik OTP Form */}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ values, setFieldValue }) => (
+                <Form>
+                  {/* OTP Inputs */}
+                  <div className="mt-[35px] mb-10">
+                    <div className="flex justify-center items-center gap-[15px]">
+                      {values.otp.map((_, index) => (
+                        <Field
+                          key={index}
+                          id={`otp-${index}`}
+                          name={`otp[${index}]`}
+                          maxLength={1}
+                          className="w-10 sm:w-14 h-12 sm:h-[62px] text-center text-lg font-semibold rounded border border-[#D0D0D0] focus:outline-none"
+                          onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            handleInput(e, index, setFieldValue)
+                          }
+                          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+                            handleKeyDown(e, index, setFieldValue, values)
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Verify Button */}
+                  <button
+                    type="submit"
+                    className="w-full py-3 lg:py-[14px] text-white bg-purple text-lg font-medium rounded cursor-pointer"
+                  >
+                    Verify
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+
+          {/* Footer */}
+          <div className="text-sm text-[#595959] p-[35px] flex justify-center lg:justify-between flex-col lg:flex-row items-center gap-3">
+            <span>© 2025 ETH Wallet.</span>
+            <span>
+              <a href="javascript:void(0)" className="me-[25px]">
+                Privacy Policy
+              </a>
+              <a href="javascript:void(0)">Terms Use</a>
+            </span>
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="md:w-1/2 order-1 md:order-2 hidden md:block">
+          <div className="bg-[url(/auth-bg.png)] bg-cover bg-no-repeat bg-[100%_100%] h-full w-full flex flex-col items-center justify-center py-24">
+            <div className="px-6 sm:px-10 lg:px-[70px]">
+              <div className="pb-[88px]">
+                <h3 className="text-white text-2xl sm:text-3xl lg:text-4xl font-semibold mb-[15px]">
+                  Two-Factor Verification
+                </h3>
+                <p className="text-white font-normal text-sm sm:text-base leading-[26px]">
+                  Use your Google Authenticator app to enter the verification
+                  code and unlock your account.
+                </p>
+              </div>
+              <img src="/verification.png" alt="Verification" className="mx-auto" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
