@@ -52,7 +52,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
         </div>
       )}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col bg-bodybg">
         <TopNavbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
         <main className="p-4 md:p-[25px] flex-1">{children}</main>
         <div className="pb-[25px] px-[25px]">

@@ -31,11 +31,11 @@ img {
   --color-listborder:#F3F3F3;
   --color-blue: #3B5AF5;
   --color-afterline:#D0D0D0;
+  --color-bodybg: #F8F4FD;
 }
 
 body {
   font-family: "Inter", "Inter Fallback", sans-serif;
-  background-color: #F8F4FD;
 }
 
 
