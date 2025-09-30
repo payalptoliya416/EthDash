@@ -74,7 +74,7 @@ export default function PasswordRecovery(): JSX.Element {
             <Form className="md:mx-11">
               {/* Email Field */}
               <div className="mb-5">
-                <label className="block text-lg font-normal mb-[10px]">
+                <label className="block text-base font-normal mb-[10px]">
                   Email Address
                 </label>
                 <Field

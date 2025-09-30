@@ -78,7 +78,7 @@ export default function Login(): JSX.Element {
             <Form className="mt-7 md:mx-11">
               {/* Email */}
               <div className="mb-5">
-                <label className="block text-lg font-normal mb-[10px]">
+                <label className="block text-base font-normal mb-[10px]">
                   Email Address
                 </label>
                 <Field
@@ -96,7 +96,7 @@ export default function Login(): JSX.Element {
 
               {/* Password */}
               <div className="mb-5">
-                <label className="block text-lg font-normal mb-[10px]">
+                <label className="block text-base font-normal mb-[10px]">
                   Password
                 </label>
                 <div className="relative">

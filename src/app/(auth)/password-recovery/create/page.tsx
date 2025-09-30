@@ -78,7 +78,7 @@ export default function Create(): JSX.Element {
             <Form className="md:mx-11">
               {/* New Password */}
               <div className="mb-5">
-                <label className="block text-lg font-normal mb-[10px]">
+                <label className="block text-base font-normal mb-[10px]">
                   New Password
                 </label>
                 <div className="relative">
@@ -109,7 +109,7 @@ export default function Create(): JSX.Element {
 
               {/* Confirm Password */}
               <div className="mb-5">
-                <label className="block text-lg font-normal mb-[10px]">
+                <label className="block text-base font-normal mb-[10px]">
                   Confirm Password
                 </label>
                 <div className="relative">
