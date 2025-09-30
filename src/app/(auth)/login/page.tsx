@@ -75,7 +75,7 @@ export default function Login(): JSX.Element {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className="mt-7">
+            <Form className="mt-7 md:mx-11">
               {/* Email */}
               <div className="mb-5">
                 <label className="block text-lg font-normal mb-[10px]">

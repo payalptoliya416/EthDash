@@ -83,11 +83,11 @@ const SignupPage: React.FC = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className="mt-7 mx-11">
+            <Form className="mt-7 md:mx-11">
               {/* Name + Surname */}
               <div className="flex lg:items-center gap-5 mb-4 flex-col lg:flex-row">
                 <div className="lg:w-1/2">
-                  <label className="block text-lg font-normal mb-2">
+                  <label className="block text-base font-normal mb-2">
                     Name
                   </label>
                   <Field
@@ -103,7 +103,7 @@ const SignupPage: React.FC = () => {
                   />
                 </div>
                 <div className="lg:w-1/2">
-                  <label className="block text-lg font-normal mb-2">
+                  <label className="block text-base font-normal mb-2">
                     Surname
                   </label>
                   <Field
@@ -122,7 +122,7 @@ const SignupPage: React.FC = () => {
 
               {/* Email */}
               <div className="mb-4">
-                <label className="block text-lg font-normal mb-2">
+                <label className="block text-base font-normal mb-2">
                   Email Address
                 </label>
                 <Field
@@ -140,7 +140,7 @@ const SignupPage: React.FC = () => {
 
               {/* Password */}
               <div className="mb-4">
-                <label className="block text-lg font-normal mb-2">
+                <label className="block text-base font-normal mb-2">
                   Password
                 </label>
                 <div className="relative">
@@ -171,7 +171,7 @@ const SignupPage: React.FC = () => {
 
               {/* Confirm Password */}
               <div className="mb-4">
-                <label className="block text-lg font-normal mb-2">
+                <label className="block text-base font-normal mb-2">
                   Confirm Password
                 </label>
                 <div className="relative">
