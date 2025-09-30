@@ -22,11 +22,20 @@ img {
   --color-bordercolor: #e7e7e7;
   --color-accetgray: #414141;
   --color-yellow: #f0b91f;
+  --color-lightgray: #F3F3F3;
+  --color-darkblack :#000000;
+  --color-paragray:#595959;
+  --color-tablehead: #F8F4FD;
+  --color-completed:#1CA77F;
+  --color-listbg: #F9F9F9;
+  --color-listborder:#F3F3F3;
+  --color-blue: #3B5AF5;
+  --color-afterline:#D0D0D0;
 }
 
 body {
-  color: #717171;
   font-family: "Inter", "Inter Fallback", sans-serif;
+  background-color: #F8F4FD;
 }
 
 
@@ -38,7 +47,7 @@ body {
   @apply text-secondary text-sm sm:text-base lg:text-lg font-normal mb-8;
 }
 .input{
-  @apply w-full border border-[#E7E7E7] px-[15px] py-3 rounded text-base;
+  @apply w-full border border-bordercolor px-[15px] py-3 rounded text-base;
 }
 .submit-form{
   @apply w-full py-3 lg:py-[14px] text-white bg-purple text-lg font-medium rounded cursor-pointer;
@@ -47,8 +56,22 @@ body {
   @apply px-6 sm:px-10 lg:px-16;
 }
 .policy{
-  @apply text-sm text-[#595959] p-6 flex justify-center lg:justify-between flex-col lg:flex-row items-center gap-3;
+  @apply text-sm text-paragray p-6 flex justify-center lg:justify-between flex-col lg:flex-row items-center gap-3;
 }
 .right-container{
   @apply px-6 sm:px-10 lg:px-16;
+}
+
+/* --overview coontent-- */
+.common-bg{
+  @apply bg-whitelight shadow-[4px_4px_48px_0_rgba(18,18,18,0.08)] p-5 rounded-[10px];
+}
+.box-title{
+  @apply text-base font-semibold text-primary mb-0;
+}
+.thead-th{
+  @apply px-[19px] py-[14px] text-sm font-semibold text-primary border border-bordercolor whitespace-nowrap;
+}
+.tbody-tr{
+  @apply px-[19px] py-4 md:py-[21px] text-sm text-paragray font-medium border border-bordercolor whitespace-nowrap;
 }

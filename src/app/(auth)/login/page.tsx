@@ -186,7 +186,7 @@ export default function Login(): JSX.Element {
                 <p className="text-base font-normal">
                   Don’t have an account?{" "}
                   <a
-                    href="signup"
+                    href="/"
                     className="font-semibold text-[#6C24E0] underline cursor-pointer"
                   >
                     Sign Up
