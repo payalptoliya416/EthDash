@@ -6,6 +6,7 @@ import { JSX, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 // 🔹 Define types for form values
 interface LoginFormValues {
@@ -185,12 +186,12 @@ export default function Login(): JSX.Element {
               <div className="text-center">
                 <p className="text-base font-normal">
                   Don’t have an account?{" "}
-                  <a
+                  <Link
                     href="/"
                     className="font-semibold text-[#6C24E0] underline cursor-pointer"
                   >
                     Sign Up
-                  </a>
+                  </Link>
                 </p>
               </div>
             </Form>

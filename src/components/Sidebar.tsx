@@ -1,10 +1,8 @@
 'use client';
 
 import React from "react";
-import { ArchiveBoxArrowDownIcon, ChartPieIcon, CurrencyDollarIcon, HomeIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxArrowDownIcon, ChartPieIcon, CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation"; 
-
-interface SidebarProps {};
 
 const navItems = [
   { label: "Overview", icon: ChartPieIcon, href: "/overview" },
@@ -12,7 +10,7 @@ const navItems = [
   { label: "Bank Withdrawal", icon: ArchiveBoxArrowDownIcon, href: "/bank-withdrawal" },
 ];
 
-const Sidebar: React.FC<SidebarProps> = () => {
+const Sidebar: React.FC = () => {
   const pathname = usePathname();
 
   return (

@@ -46,38 +46,37 @@ export default function Verification(): JSX.Element {
   };
 
   // 🔹 Handle OTP Input
-  const handleInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-    setFieldValue: (field: string, value: any) => void
-  ) => {
-    const { value } = e.target;
-    if (/^[0-9]$/.test(value)) {
-      setFieldValue(`otp[${index}]`, value);
-      // focus next input
-      const nextInput = document.getElementById(`otp-${index + 1}`) as HTMLInputElement | null;
-      if (nextInput) nextInput.focus();
-    } else if (value === "") {
-      setFieldValue(`otp[${index}]`, "");
-    }
-  };
+const handleInput = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  index: number,
+  setFieldValue: (field: string, value: string, shouldValidate?: boolean) => void
+) => {
+  const { value } = e.target;
+  if (/^[0-9]$/.test(value)) {
+    setFieldValue(`otp[${index}]`, value);
+    const nextInput = document.getElementById(`otp-${index}`) as HTMLInputElement | null;
+    if (nextInput) nextInput.focus();
+  } else if (value === "") {
+    setFieldValue(`otp[${index}]`, "");
+  }
+};
 
   // 🔹 Handle Backspace Navigation
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    index: number,
-    setFieldValue: (field: string, value: any) => void,
-    values: VerificationFormValues
-  ) => {
-    if (e.key === "Backspace") {
-      if (values.otp[index] === "") {
-        const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement | null;
-        if (prevInput) prevInput.focus();
-      } else {
-        setFieldValue(`otp[${index}]`, "");
-      }
+const handleKeyDown = (
+  e: React.KeyboardEvent<HTMLInputElement>,
+  index: number,
+  setFieldValue: (field: string, value: string, shouldValidate?: boolean) => void,
+  values: VerificationFormValues
+) => {
+  if (e.key === "Backspace") {
+    if (values.otp[index] === "") {
+      const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement | null;
+      if (prevInput) prevInput.focus();
+    } else {
+      setFieldValue(`otp[${index}]`, "");
     }
-  };
+  }
+};
 
   return (
     <>
