@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
+import Image from "next/image";
 
 type Step1Values = {
   caseId: string;
@@ -101,7 +102,7 @@ const [step, setStep] = useState(1);
               type="text"
               name="name"
               placeholder="PR99509"
-              className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+              className="input"
             />
           </div>
           <div className="mb-[35px]">
@@ -110,7 +111,7 @@ const [step, setStep] = useState(1);
               type="text"
               name="email"
               placeholder="jennywilson15@gmail.com"
-              className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+              className="input"
             />
           </div>
           <div className="text-center">
@@ -184,29 +185,35 @@ const [step, setStep] = useState(1);
        <div className="flex justify-center mt-10">
       <div className="w-full max-w-[635px] bg-whitelight shadow-lg rounded-lg px-7 md:px-10 py-7 md:py-8">
         {/* Stepper */}
-        <div className="flex items-center justify-center mb-10">
-          {[1, 2].map((s, index, array) => (
-            <>
-            <div key={s} className="flex flex-col items-center gap-2">
-              <span
+       <div className="flex items-center justify-center mb-10">
+        {[1, 2].map((s, index, array) => (
+            <React.Fragment key={s}>
+            <div className="flex flex-col items-center gap-2">
+                <span
                 className={`w-12 h-12 rounded-full flex justify-center items-center font-bold text-lg ${
-                  step >= s ? "bg-purple text-whitelight" : "border border-bordercolor text-linkgray"
-                }`} 
-              >
-                {step > s ? "✔" : s}
-              </span>
-              <h3 className="text-sm text-accetgray">Step</h3>
+                    step >= s ? "bg-purple text-whitelight" : "border border-bordercolor text-linkgray"
+                }`}
+                >
+                {step > s ? (
+                    <Image src="/right.png" alt="check" width={17} height={17} />
+                ) : (
+                    s
+                )}
+                </span>
+                <h3 className="text-sm text-accetgray">Step</h3>
             </div>
-             {index < array.length - 1 && (
+
+            {index < array.length - 1 && (
                 <div
-                className={`h-0.5 w-24 transition-colors duration-300 -mt-6
-                    ${step > s ? "bg-purple" : "bg-bordercolor"}`}
+                className={`h-0.5 w-24 transition-colors duration-300 -mt-6 ${
+                    step > s ? "bg-purple" : "bg-bordercolor"
+                }`}
                 ></div>
             )}
-            </>
-          ))}
+            </React.Fragment>
+        ))}
         </div>
-
+        
         {/* Formik Form */}
         <Formik initialValues={initialValues} onSubmit={handleNext}>
           {(formik) => (
@@ -219,7 +226,7 @@ const [step, setStep] = useState(1);
                       type="text"
                       name="caseId"
                       placeholder="PR99509"
-                      className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                      className="input"
                     />
                     {formik.errors.caseId && formik.touched.caseId && (
                       <div className="text-red-500 text-xs">{formik.errors.caseId}</div>
@@ -231,7 +238,7 @@ const [step, setStep] = useState(1);
                       type="email"
                       name="email"
                       placeholder="jennywilson15@gmail.com"
-                      className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                      className="input"
                     />
                     {formik.errors.email && formik.touched.email && (
                       <div className="text-red-500 text-xs">{formik.errors.email}</div>
@@ -259,7 +266,7 @@ const [step, setStep] = useState(1);
                         type="text"
                         name="name"
                         placeholder="Jenny Wilson"
-                        className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                        className="input"
                       />
                     </div>
                     <div>
@@ -267,7 +274,7 @@ const [step, setStep] = useState(1);
                       <Field
                         as="select"
                         name="walletStatus"
-                        className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                        className="input"
                       >
                         <option>Active | Jun 25, 2025 07:24 PM</option>
                         <option>Inactive | Jun 25, 2025 07:24 PM</option>
@@ -279,7 +286,7 @@ const [step, setStep] = useState(1);
                         type="text"
                         name="usdtBalance"
                         placeholder="10,180.20 USDT"
-                        className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                        className="input"
                       />
                     </div>
                     <div>
@@ -288,7 +295,7 @@ const [step, setStep] = useState(1);
                         type="text"
                         name="bankAccount"
                         placeholder="1235 5263 2568"
-                        className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                        className="input"
                       />
                     </div>
                     <div>
@@ -296,7 +303,7 @@ const [step, setStep] = useState(1);
                       <Field
                         as="select"
                         name="smartContractStatus"
-                        className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                        className="input"
                       >
                         <option>Pending</option>
                         <option>Completed</option>
@@ -308,7 +315,7 @@ const [step, setStep] = useState(1);
                         type="text"
                         name="ethDeposits"
                         placeholder="20,360.356 ETH"
-                        className="py-[14px] px-[15px] text-sm leading-[14px] placeholder:text-sm border border-bordercolor rounded w-full"
+                        className="input"
                       />
                     </div>
                   </div>
