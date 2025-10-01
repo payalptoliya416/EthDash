@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { SignupFormValues } from "@/types/signup";
+import { motion } from "framer-motion";
 
 const SignupPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -53,7 +54,9 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <motion.div className="min-h-screen flex flex-col md:flex-row"   initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}>
       <Toaster position="top-right" />
       <div className="md:w-1/2 flex flex-col order-2 md:order-1">
         {/* Logo */}
@@ -197,9 +200,7 @@ const SignupPage: React.FC = () => {
 
               {/* Submit */}
               <button
-                type="submit"
-                className="submit-form"
-              >
+                type="submit" className="submit-form">
                 Create a New Wallet
               </button>
 
@@ -277,7 +278,7 @@ const SignupPage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

@@ -44,9 +44,19 @@ body {
 .input{
   @apply w-full border border-bordercolor px-[15px] py-2 rounded text-base;
 }
-.submit-form{
-  @apply w-full py-2 text-white bg-purple text-lg font-medium rounded cursor-pointer;
+.submit-form {
+  @apply w-full py-2 text-white bg-purple text-lg font-medium rounded cursor-pointer 
+         transition-all duration-300 ease-in-out shadow-md;
 }
+
+.submit-form:hover {
+  @apply shadow-xl; /* increase shadow on hover */
+}
+
+.submit-form:active {
+  @apply shadow-sm; /* smaller shadow on click */
+}
+
 .auth-container{
   @apply px-6 sm:px-10 lg:px-16;
 }

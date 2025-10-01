@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { JSX } from "react";
 import Image from "next/image";
 import { PasswordRecoveryValues } from "@/types/signup";
+import { motion } from "framer-motion";
 
 export default function PasswordRecovery(): JSX.Element {
   const router = useRouter();
@@ -43,7 +44,11 @@ export default function PasswordRecovery(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <motion.div className="min-h-screen flex flex-col md:flex-row"
+    initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+    >
       <Toaster position="top-right" />
 
       {/* Left Section */}
@@ -138,6 +143,6 @@ export default function PasswordRecovery(): JSX.Element {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

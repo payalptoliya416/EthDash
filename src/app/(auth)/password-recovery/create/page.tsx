@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { CreatePasswordValues } from "@/types/signup";
+import { motion } from "framer-motion";
 
 export default function Create(): JSX.Element {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +47,11 @@ export default function Create(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <motion.div className="min-h-screen flex flex-col md:flex-row"
+    initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+    >
       <Toaster position="top-right" />
 
       {/* Left Section */}
@@ -175,6 +180,6 @@ export default function Create(): JSX.Element {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

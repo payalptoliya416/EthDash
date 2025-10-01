@@ -9,7 +9,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import { LoginFormValues } from "@/types/signup";
-
+import { motion } from "framer-motion";
 
 export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -47,7 +47,10 @@ export default function Login(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <motion.div className="min-h-screen flex flex-col md:flex-row"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}>
       <Toaster position="top-right" />
       <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between ">
         {/* Logo */}
@@ -227,6 +230,6 @@ export default function Login(): JSX.Element {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

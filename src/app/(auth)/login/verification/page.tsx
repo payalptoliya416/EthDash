@@ -6,6 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { JSX } from "react";
 import Image from "next/image";
 import { VerificationFormValues } from "@/types/signup";
+import { motion } from "framer-motion";
 // import { useRouter } from "next/navigation";
 
 export default function Verification(): JSX.Element {
@@ -94,7 +95,10 @@ export default function Verification(): JSX.Element {
   return (
     <>
       <Toaster position="top-right" />
-      <div className="min-h-screen flex flex-col md:flex-row">
+      <motion.div className="min-h-screen flex flex-col md:flex-row"
+       initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}>
         {/* Left Section */}
         <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between ">
           <div className="p-6 pb-0 mb-9">
@@ -181,7 +185,7 @@ export default function Verification(): JSX.Element {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
