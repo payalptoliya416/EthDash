@@ -31,10 +31,10 @@ export default function GoogleAuthentication(): JSX.Element {
           <h4 className="text-primary mb-[25px] text-[22px] leading-[22px] font-semibold">
             Scan QR Code
           </h4>
-          <p className="text-[#595959] mb-[15px] text-base leading-[26px]">
+          <p className="text-paragray mb-[15px] text-base leading-[26px]">
             After signup details user will be prompted with 2FA GAuth setup
           </p>
-          <p className="text-[#595959] text-base leading-[26px]">
+          <p className="text-paragray text-base leading-[26px]">
             2FA is mandatory to create an account, please download the Google
             Authenticator app and link it to the QR below
           </p>

@@ -84,12 +84,12 @@ export default function Create(): JSX.Element {
                   />
                   {showPassword ? (
                     <EyeSlashIcon
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                       onClick={() => setShowPassword(false)}
                     />
                   ) : (
                     <EyeIcon
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                       onClick={() => setShowPassword(true)}
                     />
                   )}
@@ -115,12 +115,12 @@ export default function Create(): JSX.Element {
                   />
                   {showConfirm ? (
                     <EyeSlashIcon
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
                       onClick={() => setShowConfirm(false)}
                     />
                   ) : (
                     <EyeIcon
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
                       onClick={() => setShowConfirm(true)}
                     />
                   )}

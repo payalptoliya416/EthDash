@@ -159,7 +159,7 @@ export default function ActiveClient() {
               {clientTransactionList.map((tx) => (
                 <tr
                   key={tx.id}
-                  className="hover:bg-[#f3f3f3] transition-colors odd:bg-whitelight even:bg-listbg"
+                  className="hover:bg-lightgray transition-colors odd:bg-whitelight even:bg-listbg"
                 >
                   <td className="tbody-tr">{tx.clientName}</td>
                   <td className="tbody-tr">{tx.caseId}</td>

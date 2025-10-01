@@ -148,12 +148,12 @@ const SignupPage: React.FC = () => {
                   {showPassword ? (
                     <EyeSlashIcon
                       onClick={() => setShowPassword(false)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                     />
                   ) : (
                     <EyeIcon
                       onClick={() => setShowPassword(true)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                     />
                   )}
                 </div>
@@ -179,12 +179,12 @@ const SignupPage: React.FC = () => {
                   {showConfirm ? (
                     <EyeSlashIcon
                       onClick={() => setShowConfirm(false)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
                     />
                   ) : (
                     <EyeIcon
                       onClick={() => setShowConfirm(true)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                     />
                   )}
                 </div>
@@ -213,7 +213,7 @@ const SignupPage: React.FC = () => {
               {/* Google Login */}
               <a
                 href="javascript:void(0)"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-4 cursor-pointer"
+                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-4 cursor-pointer"
               >
                 <img src="/goggle.png" alt="Google" />
                 <h3 className="text-linkgray text-base font-normal">Continue with Google</h3>
@@ -222,7 +222,7 @@ const SignupPage: React.FC = () => {
               {/* Facebook Login */}
               <a
                 href="javascript:void(0)"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
+                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
               >
                 <img src="/facebook.png" alt="Facebook" />
                 <h3 className="text-linkgray text-base font-normal">Continue with Facebook</h3>
@@ -234,7 +234,7 @@ const SignupPage: React.FC = () => {
                   Already have an account?{" "}
                   <a
                     href="/login"
-                    className="font-semibold text-[#6C24E0] underline cursor-pointer"
+                    className="font-semibold text-purple underline cursor-pointer"
                   >
                     Login
                   </a>

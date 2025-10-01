@@ -96,7 +96,7 @@ export default function PasswordRecovery(): JSX.Element {
               </button>
 
               {/* Resend */}
-              <p className="text-base font-medium underline text-[#414141] text-center mb-0 cursor-pointer">
+              <p className="text-base font-medium underline text-accetgray text-center mb-0 cursor-pointer">
                 Resend
               </p>
             </Form>

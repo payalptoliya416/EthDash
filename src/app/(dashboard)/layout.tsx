@@ -38,7 +38,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <div className="hidden lg:flex">
         <Sidebar />
       </div>
-      <div className="flex-1 min-h-screen bg-[#F5F6FA]">
+      <div className="flex-1 min-h-screen bg-bgview">
          {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div

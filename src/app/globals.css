@@ -20,12 +20,13 @@
   --color-tablehead: #F8F4FD;
   --color-completed:#1CA77F;
   --color-listbg: #F9F9F9;
-  --color-listborder:#F3F3F3;
   --color-blue: #3B5AF5;
   --color-afterline:#D0D0D0;
   --color-bodybg: #F8F4FD;
   --color-linkgray : #888888;
   --color-red: #F0381F;
+  --color-grayicon: #4F4F51;
+  --color-bgview: #F5F6FA;
 }
 
 body {

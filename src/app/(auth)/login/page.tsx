@@ -105,12 +105,12 @@ export default function Login(): JSX.Element {
                   {showPassword ? (
                     <EyeSlashIcon
                       onClick={() => setShowPassword(false)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
                     />
                   ) : (
                     <EyeIcon
                       onClick={() => setShowPassword(true)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
+                      className="text-grayicon absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
                     />
                   )}
                 </div>
@@ -132,14 +132,14 @@ export default function Login(): JSX.Element {
                   />
                   <label
                     htmlFor="remember"
-                    className="ms-2 text-sm font-medium text-[#4F4F51]"
+                    className="ms-2 text-sm font-medium text-grayicon"
                   >
                     Remember
                   </label>
                 </div>
                 <a
                   href="/password-recovery"
-                  className="text-[#6C24E0] text-sm font-semibold cursor-pointer"
+                  className="text-purple text-sm font-semibold cursor-pointer"
                 >
                   Forgot password?
                 </a>
@@ -163,7 +163,7 @@ export default function Login(): JSX.Element {
               {/* Google Login */}
               <a
                 href="/signup/google-authenticator"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-5 cursor-pointer"
+                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-5 cursor-pointer"
               >
                 <img src="/goggle.png" alt="Google Login" />
                 <h3  className="text-linkgray text-base font-normal">Continue with Google</h3>
@@ -172,7 +172,7 @@ export default function Login(): JSX.Element {
               {/* Facebook Login */}
               <a
                 href="javascript:void(0)"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
+                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
               >
                 <img src="/facebook.png" alt="Facebook Login" />
                 <h3  className="text-linkgray text-base font-normal">Continue with Facebook</h3>
@@ -184,7 +184,7 @@ export default function Login(): JSX.Element {
                   Don’t have an account?{" "}
                   <Link
                     href="/"
-                    className="font-semibold text-[#6C24E0] underline cursor-pointer"
+                    className="font-semibold text-purple underline cursor-pointer"
                   >
                     Sign Up
                   </Link>

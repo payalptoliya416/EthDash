@@ -125,7 +125,7 @@ export default function Verification(): JSX.Element {
                           id={`otp-${index}`}
                           name={`otp[${index}]`}
                           maxLength={1}
-                          className="w-10 sm:w-14 h-12 sm:h-14 text-center text-lg font-semibold rounded border border-[#D0D0D0] focus:outline-none"
+                          className="w-10 sm:w-14 h-12 sm:h-14 text-center text-lg font-semibold rounded border border-bordercolor focus:outline-none"
                           onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                             handleInput(e, index, setFieldValue)
                           }
