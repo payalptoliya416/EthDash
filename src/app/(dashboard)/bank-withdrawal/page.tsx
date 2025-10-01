@@ -116,7 +116,7 @@ function BankWithdrawal() {
                 <option value="america">America</option>
               </Field>
             </div>
-          </div>
+          </div>  
         </Form>
       )}
     </Formik>

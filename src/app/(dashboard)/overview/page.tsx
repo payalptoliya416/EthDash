@@ -107,7 +107,7 @@ function Overview() {
                       type={showContract ? "text" : "password"}
                       value={contractAddress}
                       readOnly
-                      className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start" />
+                      className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start w-[360px] focus:outline-none" />
                  <div className="flex items-center gap-[7px]">
                     {showContract ? (
                       <EyeSlashIcon
@@ -164,7 +164,7 @@ function Overview() {
                 <input type={showEth ? "text" : "password"}
                   value={ethAddress}
                   readOnly
-                  className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start"/>
+                  className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start focus:outline-none"/>
                  <div className="flex items-center gap-[7px]">
                     {showEth ? (
             <EyeSlashIcon
