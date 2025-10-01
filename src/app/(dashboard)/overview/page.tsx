@@ -4,6 +4,8 @@ import { DocumentDuplicateIcon, EyeIcon, EyeSlashIcon, QuestionMarkCircleIcon } 
 import Image from "next/image";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 
 type Transaction = {
   id: number;
@@ -15,6 +17,10 @@ type Transaction = {
   date: string;
   status: "Completed" | "Pending" | "Failed";
 };
+interface DepositFormValues {
+  ethBalance: string;
+  usdValue: string;
+}
 
 const transactions: Transaction[] = [
   {
@@ -69,6 +75,15 @@ const transactions: Transaction[] = [
   },
 ];
 
+const DepositSchema = Yup.object().shape({
+  ethBalance: Yup.number()
+    .typeError('ETH Balance must be a number')
+    .required('ETH Balance is required'),
+  usdValue: Yup.number()
+    .typeError('USD Value must be a number')
+    .required('USD Value is required'),
+});
+
 function Overview() {
   const [showContract, setShowContract] = useState(false);
   const [showEth, setShowEth] = useState(false);
@@ -85,6 +100,15 @@ function Overview() {
     }
   };
 
+   const initialValues: DepositFormValues = { ethBalance: '', usdValue: '' };
+
+  const handleSubmit = (
+    values: DepositFormValues,
+    { resetForm }: FormikHelpers<DepositFormValues>
+  ) => {
+    console.log('Form Submitted:', values);
+    resetForm();
+  };
   return (
     <>
     <Toaster position="top-right"/>
@@ -133,32 +157,68 @@ function Overview() {
             </div>
             <p className="text-sm mb-[18px] text-darkblack">Your USDT available balance will update once you proceed with the ETH required deposit</p>
             <h3 className="text-base leading-[16px] mb-[11px] text-accetgray">Deposit</h3>
-             <form className="grid grid-cols-12 gap-5 w-full items-end mb-[15px]">
-            <div className="col-span-12 lg:col-span-5">
-                <label className="block text-darkblack mb-2 text-sm font-medium">ETH Balance</label>
-                <input
-                type="text"
-                className="input"
-                placeholder="1.10"
-                />
-            </div>
-            <div className="col-span-12 lg:col-span-5">
-                <label className="block text-darkblack mb-2 text-sm font-medium">USD Value</label>
-                <input
-                type="text"
-                className="input"
-                placeholder="$5500"
-                />
-            </div>
-            <div className="col-span-12 lg:col-span-2 flex items-end">
-                <button
-                type="submit"
-                className="submit-form"
+             <Formik
+            initialValues={initialValues}
+            validationSchema={DepositSchema}
+            onSubmit={handleSubmit}
+          >
+           {({ isSubmitting, errors }) => {
+              const hasError = Object.keys(errors).length > 0;
+
+              return (
+                <Form
+                  className={`grid grid-cols-12 gap-5 w-full mb-[15px] ${
+                    hasError ? 'items-center' : 'items-end'
+                  }`}
                 >
-                Deposit
-                </button>
-            </div>
-            </form>
+                  <div className="col-span-12 lg:col-span-5 flex flex-col">
+                    <label className="block text-darkblack mb-2 text-sm font-medium">
+                      ETH Balance
+                    </label>
+                    <Field
+                      type="text"
+                      name="ethBalance"
+                      placeholder="1.10"
+                      className="input"
+                    />
+                    <ErrorMessage
+                      name="ethBalance"
+                      component="div"
+                      className="text-red-500 text-sm mt-1"
+                    />
+                  </div>
+
+                  <div className="col-span-12 lg:col-span-5 flex flex-col">
+                    <label className="block text-darkblack mb-2 text-sm font-medium">
+                      USD Value
+                    </label>
+                    <Field
+                      type="text"
+                      name="usdValue"
+                      placeholder="$5500"
+                      className="input"
+                    />
+                    <ErrorMessage
+                      name="usdValue"
+                      component="div"
+                      className="text-red-500 text-sm mt-1"
+                    />
+                  </div>
+
+                  <div className="col-span-12 lg:col-span-2 flex items-end">
+                    <button
+                      type="submit"
+                      className="submit-form w-full"
+                      disabled={isSubmitting}
+                    >
+                      Deposit
+                    </button>
+                  </div>
+                </Form>
+              );
+            }}
+
+          </Formik>
              <div className="flex items-center flex-wrap gap-2">
                 <span className="text-sm leading-[14px] font-medium mr-[10px] text-darkblack">Your  ETH wallet address :</span>
                 <input type={showEth ? "text" : "password"}
