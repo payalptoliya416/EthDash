@@ -164,11 +164,11 @@ export default function ActiveClient() {
                   <td className="tbody-tr">{tx.clientName}</td>
                   <td className="tbody-tr">{tx.caseId}</td>
                   <td className="tbody-tr">
-                    <button className={`py-2 text-center rounded-md text-white w-[105px] font-normal text-sm leading-[14px] ${tx.walletStatus === 'Active' ?  "bg-completed":"bg-yellow"} `}>  {tx.walletStatus}</button>
+                    <span className={`py-2 text-center rounded-md text-white w-[105px] font-normal text-sm leading-[14px] ${tx.walletStatus === 'Active' ?  "bg-completed":"bg-yellow"} `}>  {tx.walletStatus}</span>
                   </td>
                   <td className="tbody-tr">{tx.usdt}</td>
                   <td className="tbody-tr">
-                     <button className={`py-2 text-center rounded-md text-white w-[60px] font-normal text-sm leading-[14px] ${tx.bankAccount === 'Yes' ?  "bg-blue":"bg-red"} `}>  {tx.bankAccount}</button>
+                     <span className={`py-2 text-center rounded-md text-white w-[60px] font-normal text-sm leading-[14px] ${tx.bankAccount === 'Yes' ?  "bg-blue":"bg-red"} `}>  {tx.bankAccount}</span>
                   </td>
                   <td className="tbody-tr">{tx.ethBalance}</td>
                 </tr>
