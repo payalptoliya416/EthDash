@@ -1,5 +1,9 @@
-import { DocumentDuplicateIcon, EyeIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+'use client'
+
+import { DocumentDuplicateIcon, EyeIcon, EyeSlashIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 type Transaction = {
   id: number;
@@ -66,14 +70,30 @@ const transactions: Transaction[] = [
 ];
 
 function Overview() {
+  const [showContract, setShowContract] = useState(false);
+  const [showEth, setShowEth] = useState(false);
+
+  const contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
+  const ethAddress = "0x....23123123132131dsada";
+
+  const copyToClipboard = async (value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      toast.success("Copied to clipboard");
+    } catch (err) {
+      toast.error("Failed to copy");
+    }
+  };
+
   return (
     <>
+    <Toaster position="top-right"/>
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-12 xl:col-span-7">
         <div className="common-bg mb-5">
         <div className="flex justify-between items-center mb-[15px]">
             <h3 className="box-title">Smart Contract Details</h3>
-            <button className="text-accetgray bg-yellow py-2 px-5 rounded-[4px] text-sm font-medium">Pending</button>
+            <span className="inline-block rounded-[4px] bg-yellow px-5 py-2 text-sm font-medium text-accetgray">  Pending</span>
         </div>
         <div>
             <h3 className="text-lg font-medium mb-[10px] text-accetgray">Recovered Funds Balance</h3>
@@ -83,10 +103,24 @@ function Overview() {
             </div>
             <div className="flex items-center flex-wrap gap-2">
                 <span className="text-sm leading-[14px] font-medium mr-[10px] text-darkblack">Smart contract address :</span>
-                 <button className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start">0xdAC17F958D2ee523a2206206994597C13D831ec7</button>
+                     <input
+                      type={showContract ? "text" : "password"}
+                      value={contractAddress}
+                      readOnly
+                      className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start" />
                  <div className="flex items-center gap-[7px]">
-                    <EyeIcon className="h-4 w-4 text-accetgray cursor-pointer"/>
-                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray cursor-pointer"/>
+                    {showContract ? (
+                      <EyeSlashIcon
+                        className="h-4 w-4 text-accetgray cursor-pointer"
+                        onClick={() => setShowContract(false)}
+                      />
+                    ) : (
+                      <EyeIcon
+                        className="h-4 w-4 text-accetgray cursor-pointer"
+                        onClick={() => setShowContract(true)}
+                      />
+                    )}
+                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray cursor-pointer"  onClick={() => copyToClipboard(contractAddress)}/>
                  </div>
             </div> 
         </div>
@@ -104,7 +138,7 @@ function Overview() {
                 <label className="block text-darkblack mb-2 text-sm font-medium">ETH Balance</label>
                 <input
                 type="text"
-                className="w-full border border-bordercolor py-3 px-4 rounded text-sm text-darkblack focus:outline-none"
+                className="input"
                 placeholder="1.10"
                 />
             </div>
@@ -112,14 +146,14 @@ function Overview() {
                 <label className="block text-darkblack mb-2 text-sm font-medium">USD Value</label>
                 <input
                 type="text"
-                className="w-full border border-bordercolor py-3 px-4 rounded text-sm text-darkblack focus:outline-none"
+                className="input"
                 placeholder="$5500"
                 />
             </div>
             <div className="col-span-12 lg:col-span-2 flex items-end">
                 <button
                 type="submit"
-                className="w-full py-2 md:py-3 rounded bg-purple text-whitelight text-base hover:bg-purple/90 transition cursor-pointer"
+                className="submit-form"
                 >
                 Deposit
                 </button>
@@ -127,10 +161,23 @@ function Overview() {
             </form>
              <div className="flex items-center flex-wrap gap-2">
                 <span className="text-sm leading-[14px] font-medium mr-[10px] text-darkblack">Your  ETH wallet address :</span>
-                 <button className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start">0x....23123123132131dsada</button>
+                <input type={showEth ? "text" : "password"}
+                  value={ethAddress}
+                  readOnly
+                  className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start"/>
                  <div className="flex items-center gap-[7px]">
-                    <EyeIcon className="h-4 w-4 text-accetgray cursor-pointer"/>
-                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray cursor-pointer"/>
+                    {showEth ? (
+            <EyeSlashIcon
+              className="h-4 w-4 text-accetgray cursor-pointer"
+              onClick={() => setShowEth(false)}
+            />
+          ) : (
+            <EyeIcon
+              className="h-4 w-4 text-accetgray cursor-pointer"
+              onClick={() => setShowEth(true)}
+            />
+          )}
+                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray cursor-pointer"    onClick={() => copyToClipboard(ethAddress)}/>
                  </div>
             </div> 
         </div>

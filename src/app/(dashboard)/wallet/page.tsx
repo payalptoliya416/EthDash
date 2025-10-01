@@ -22,17 +22,17 @@ function Wallet() {
            </div> 
        </div>
         <div className="col-span-12 common-bg space-y-5">
-            <div className="flex justify-between items-center rounded-md bg-listbg border border-lightgray py-4 lg:py-[25px] px-4 md:px-[23px] flex-wrap gap-3">
+            <div className="flex justify-between items-center rounded-md bg-listbg border border-lightgray py-4 md:py-5 px-4 md:px-[23px] flex-wrap gap-3">
                   <h3 className="text-base md:text-lg leading-5 font-normal text-primary">Wallet Type:</h3>
                   <h2 className="text-base md:text-lg leading-5 font-medium text-primary">ERC-20 Non Custodial</h2>
             </div>
-            <div className="flex justify-between items-center rounded-md bg-listbg border border-lightgray py-4 lg:py-[25px] px-4 md:px-[23px] flex-wrap gap-3">
+            <div className="flex justify-between items-center rounded-md bg-listbg border border-lightgray py-4 md:py-5 px-4 md:px-[23px] flex-wrap gap-3">
                   <h3 className="text-base md:text-lg leading-5 font-normal text-primary">Wallet Creation Date:</h3>
                   <h2 className="text-base md:text-lg leading-5 font-medium text-primary">May 26, 2025</h2>
             </div>
-            <div className="flex justify-between items-center rounded-md bg-listbg border border-lightgray py-4 lg:py-[25px] px-4 md:px-[23px] flex-wrap gap-3">
+            <div className="flex justify-between items-center rounded-md bg-listbg border border-lightgray py-4 md:py-5 px-4 md:px-[23px] flex-wrap gap-3">
                   <h3 className="text-base md:text-lg leading-5 font-normal text-primary">Wallet Security:</h3>
-                  <button className="text-whitelight py-2 px-4 rounded bg-blue font-medium text-base md:text-lg leading-[20px]">2FA</button>
+                  <button className="text-whitelight py-1 px-4 rounded bg-blue font-medium text-base leading-[20px]">2FA</button>
             </div>
         </div>
     </div>

@@ -41,7 +41,7 @@ body {
   @apply text-secondary text-sm sm:text-base lg:text-lg font-normal mb-8;
 }
 .input {
-  @apply w-full border border-bordercolor px-[15px] py-2 rounded text-base;
+  @apply w-full border border-bordercolor px-[15px] py-2 rounded text-base focus:outline-none;
 }
 .submit-form {
   @apply w-full py-2 text-white bg-purple text-lg font-medium rounded cursor-pointer 
