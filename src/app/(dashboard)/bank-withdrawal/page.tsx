@@ -191,21 +191,25 @@ function BankWithdrawal() {
                       name="amount1"
                       type="text"
                       className="input"
+                      disabled
                     />
                     <Field
                       name="amount2"
                       type="text"
                       className="input"
+                      disabled
                     />
                     <Field
                       name="amount3"
                       type="text"
                       className="input"
+                      disabled
                     />
                     <Field
                       name="amount4"
                       type="text"
                       className="input"
+                      disabled
                     />
                   </Form>
                 )}
