@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 interface SignupFormValues {
   name: string;
   surname: string;
@@ -153,12 +154,12 @@ const SignupPage: React.FC = () => {
                   {showPassword ? (
                     <EyeSlashIcon
                       onClick={() => setShowPassword(false)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                     />
                   ) : (
                     <EyeIcon
                       onClick={() => setShowPassword(true)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                     />
                   )}
                 </div>
@@ -184,12 +185,12 @@ const SignupPage: React.FC = () => {
                   {showConfirm ? (
                     <EyeSlashIcon
                       onClick={() => setShowConfirm(false)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
                     />
                   ) : (
                     <EyeIcon
                       onClick={() => setShowConfirm(true)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                     />
                   )}
                 </div>
@@ -218,19 +219,19 @@ const SignupPage: React.FC = () => {
               {/* Google Login */}
               <a
                 href="javascript:void(0)"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-3 mb-4 cursor-pointer"
+                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-4 cursor-pointer"
               >
                 <img src="/goggle.png" alt="Google" />
-                <h3>Continue with Google</h3>
+                <h3 className="text-linkgray text-base font-normal">Continue with Google</h3>
               </a>
 
               {/* Facebook Login */}
               <a
                 href="javascript:void(0)"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-3 mb-[25px] cursor-pointer"
+                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
               >
                 <img src="/facebook.png" alt="Facebook" />
-                <h3>Continue with Facebook</h3>
+                <h3 className="text-linkgray text-base font-normal">Continue with Facebook</h3>
               </a>
 
               {/* Already have account */}
@@ -274,7 +275,11 @@ const SignupPage: React.FC = () => {
                 managing your crypto safely.
               </p>
             </div>
-            <img src="/right-sign.png" alt="Right Sign" className="mx-auto" />
+               <Image   src="/right-sign.png"
+                          alt="Right Sign"
+                          width={350}
+                          height={220}
+                          className="mx-auto"  />
           </div>
         </div>
       </div>

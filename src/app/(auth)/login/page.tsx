@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Image from "next/image";
 
 // 🔹 Define types for form values
 interface LoginFormValues {
@@ -109,12 +110,12 @@ export default function Login(): JSX.Element {
                   {showPassword ? (
                     <EyeSlashIcon
                       onClick={() => setShowPassword(false)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
                     />
                   ) : (
                     <EyeIcon
                       onClick={() => setShowPassword(true)}
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer w-4 h-4"
                     />
                   )}
                 </div>
@@ -167,19 +168,19 @@ export default function Login(): JSX.Element {
               {/* Google Login */}
               <a
                 href="/signup/google-authenticator"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-3 lg:py-[17px] mb-5 cursor-pointer"
+                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-5 cursor-pointer"
               >
                 <img src="/goggle.png" alt="Google Login" />
-                <h3>Continue with Google</h3>
+                <h3  className="text-linkgray text-base font-normal">Continue with Google</h3>
               </a>
 
               {/* Facebook Login */}
               <a
                 href="javascript:void(0)"
-                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-3 lg:py-[17px] mb-[25px] cursor-pointer"
+                className="border border-[#E7E7E7] flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
               >
                 <img src="/facebook.png" alt="Facebook Login" />
-                <h3>Continue with Facebook</h3>
+                <h3  className="text-linkgray text-base font-normal">Continue with Facebook</h3>
               </a>
 
               {/* Signup redirect */}
@@ -223,7 +224,11 @@ export default function Login(): JSX.Element {
                 verify with two-factor authentication
               </p>
             </div>
-            <img src="/login.png" alt="Login Illustration" className="mx-auto" />
+             <Image  src="/login.png"
+                                      alt="Login Illustration"
+                                      width={240}
+                                      height={220}
+                                      className="mx-auto"  />
           </div>
         </div>
       </div>

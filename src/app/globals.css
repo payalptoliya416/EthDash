@@ -9,9 +9,7 @@
   --text-gray-color: #848484;
   --text-border-color: #e7e7e7;
 }
-img {
-  max-width: 100%;
-}
+
 @theme inline {
   --color-primary: #121212;
   --color-secondary: #2a2a2a;
@@ -32,6 +30,7 @@ img {
   --color-blue: #3B5AF5;
   --color-afterline:#D0D0D0;
   --color-bodybg: #F8F4FD;
+  --color-linkgray : #888888;
 }
 
 body {
@@ -50,7 +49,7 @@ body {
   @apply w-full border border-bordercolor px-[15px] py-2 rounded text-base;
 }
 .submit-form{
-  @apply w-full py-3 lg:py-[14px] text-white bg-purple text-lg font-medium rounded cursor-pointer;
+  @apply w-full py-2 text-white bg-purple text-lg font-medium rounded cursor-pointer;
 }
 .auth-container{
   @apply px-6 sm:px-10 lg:px-16;

@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { JSX } from "react";
+import Image from "next/image";
 
 // 🔹 Form values type
 interface PasswordRecoveryValues {
@@ -131,7 +132,13 @@ export default function PasswordRecovery(): JSX.Element {
                 creating password.
               </p>
             </div>
-            <img src="/pass-right.png" alt="Password Recovery" className="mx-auto" />
+            <Image
+                            src="/pass-right.png"
+                            alt="Password Recovery"
+                            width={240}
+                            height={220}
+                            className="mx-auto"
+                          />
           </div>
         </div>
       </div>

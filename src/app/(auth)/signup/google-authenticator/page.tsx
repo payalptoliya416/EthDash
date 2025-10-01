@@ -67,11 +67,10 @@ export default function GoogleAuthentication(): JSX.Element {
               </p>
             </div>
 
-            {/*  Use next/image here too */}
             <Image
               src="/authenticator.png"
               alt="Authenticator"
-              width={280}
+              width={300}
               height={220}
               className="mx-auto"
             />

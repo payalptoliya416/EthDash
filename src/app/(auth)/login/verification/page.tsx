@@ -4,6 +4,7 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { JSX } from "react";
+import Image from "next/image";
 // import { useRouter } from "next/navigation";
 
 // 🔹 Define form values type
@@ -17,7 +18,11 @@ export default function Verification(): JSX.Element {
   // 🔹 Validation Schema
   const validationSchema = Yup.object({
     otp: Yup.array()
-      .of(Yup.string().matches(/^[0-9]$/, "Must be a digit").required("Required"))
+      .of(
+        Yup.string()
+          .matches(/^[0-9]$/, "Must be a digit")
+          .required("Required")
+      )
       .length(5, "OTP must be 5 digits"),
   });
 
@@ -46,37 +51,49 @@ export default function Verification(): JSX.Element {
   };
 
   // 🔹 Handle OTP Input
-const handleInput = (
-  e: React.ChangeEvent<HTMLInputElement>,
-  index: number,
-  setFieldValue: (field: string, value: string, shouldValidate?: boolean) => void
-) => {
-  const { value } = e.target;
-  if (/^[0-9]$/.test(value)) {
-    setFieldValue(`otp[${index}]`, value);
-    const nextInput = document.getElementById(`otp-${index}`) as HTMLInputElement | null;
-    if (nextInput) nextInput.focus();
-  } else if (value === "") {
-    setFieldValue(`otp[${index}]`, "");
-  }
-};
-
-  // 🔹 Handle Backspace Navigation
-const handleKeyDown = (
-  e: React.KeyboardEvent<HTMLInputElement>,
-  index: number,
-  setFieldValue: (field: string, value: string, shouldValidate?: boolean) => void,
-  values: VerificationFormValues
-) => {
-  if (e.key === "Backspace") {
-    if (values.otp[index] === "") {
-      const prevInput = document.getElementById(`otp-${index - 1}`) as HTMLInputElement | null;
-      if (prevInput) prevInput.focus();
-    } else {
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    setFieldValue: (
+      field: string,
+      value: string,
+      shouldValidate?: boolean
+    ) => void
+  ) => {
+    const { value } = e.target;
+    if (/^[0-9]$/.test(value)) {
+      setFieldValue(`otp[${index}]`, value);
+      const nextInput = document.getElementById(
+        `otp-${index}`
+      ) as HTMLInputElement | null;
+      if (nextInput) nextInput.focus();
+    } else if (value === "") {
       setFieldValue(`otp[${index}]`, "");
     }
-  }
-};
+  };
+
+  // 🔹 Handle Backspace Navigation
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number,
+    setFieldValue: (
+      field: string,
+      value: string,
+      shouldValidate?: boolean
+    ) => void,
+    values: VerificationFormValues
+  ) => {
+    if (e.key === "Backspace") {
+      if (values.otp[index] === "") {
+        const prevInput = document.getElementById(
+          `otp-${index - 1}`
+        ) as HTMLInputElement | null;
+        if (prevInput) prevInput.focus();
+      } else {
+        setFieldValue(`otp[${index}]`, "");
+      }
+    }
+  };
 
   return (
     <>
@@ -90,9 +107,7 @@ const handleKeyDown = (
             </a>
           </div>
           <div className="text-center auth-container">
-            <h1 className="auth-heading">
-              Google Authenticator Code
-            </h1>
+            <h1 className="auth-heading">Google Authenticator Code</h1>
             <p className="auth-para">
               Enter 5-digit Google Authenticator code to continue.
             </p>
@@ -114,23 +129,20 @@ const handleKeyDown = (
                           id={`otp-${index}`}
                           name={`otp[${index}]`}
                           maxLength={1}
-                          className="w-10 sm:w-14 h-12 sm:h-[62px] text-center text-lg font-semibold rounded border border-[#D0D0D0] focus:outline-none"
+                          className="w-10 sm:w-14 h-12 sm:h-14 text-center text-lg font-semibold rounded border border-[#D0D0D0] focus:outline-none"
                           onInput={(e: React.ChangeEvent<HTMLInputElement>) =>
                             handleInput(e, index, setFieldValue)
                           }
-                          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-                            handleKeyDown(e, index, setFieldValue, values)
-                          }
+                          onKeyDown={(
+                            e: React.KeyboardEvent<HTMLInputElement>
+                          ) => handleKeyDown(e, index, setFieldValue, values)}
                         />
                       ))}
                     </div>
                   </div>
 
                   {/* Verify Button */}
-                  <button
-                    type="submit"
-                    className="submit-form"
-                  >
+                  <button type="submit" className="submit-form">
                     Verify
                   </button>
                 </Form>
@@ -163,7 +175,13 @@ const handleKeyDown = (
                   code and unlock your account.
                 </p>
               </div>
-              <img src="/verification.png" alt="Verification" className="mx-auto" />
+              <Image
+                src="/verification.png"
+                alt="Verification"
+                width={240}
+                height={220}
+                className="mx-auto"
+              />
             </div>
           </div>
         </div>

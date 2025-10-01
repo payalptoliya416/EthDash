@@ -6,6 +6,7 @@ import { JSX, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 // 🔹 Form Values Type
 interface CreatePasswordValues {
@@ -62,9 +63,7 @@ export default function Create(): JSX.Element {
         </div>
 
         <div className="auth-container">
-          <h1 className="auth-heading">
-            Your Key to Access
-          </h1>
+          <h1 className="auth-heading">Your Key to Access</h1>
           <p className="auth-para">
             Create a unique password to unlock your wallet securely.
           </p>
@@ -90,12 +89,12 @@ export default function Create(): JSX.Element {
                   />
                   {showPassword ? (
                     <EyeSlashIcon
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                       onClick={() => setShowPassword(false)}
                     />
                   ) : (
                     <EyeIcon
-                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-5 h-5"
+                      className="text-[#4F4F51] absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer  w-4 h-4"
                       onClick={() => setShowPassword(true)}
                     />
                   )}
@@ -139,10 +138,7 @@ export default function Create(): JSX.Element {
               </div>
 
               {/* Save Button */}
-              <button
-                type="submit"
-                className="submit-form"
-              >
+              <button type="submit" className="submit-form">
                 Save
               </button>
             </Form>
@@ -170,10 +166,17 @@ export default function Create(): JSX.Element {
                 Shield Your Wallet
               </h3>
               <p className="text-white font-normal text-sm sm:text-base leading-[26px]">
-                Create a robust, unique password combining letters, numbers, and symbols for wallet security.
+                Create a robust, unique password combining letters, numbers, and
+                symbols for wallet security.
               </p>
             </div>
-            <img src="/passcreate.png" alt="Create Password" className="mx-auto" />
+            <Image
+              src="/passcreate.png"
+              alt="Create Password"
+              width={240}
+              height={220}
+              className="mx-auto"
+            />
           </div>
         </div>
       </div>
