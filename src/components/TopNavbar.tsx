@@ -15,11 +15,11 @@ export default function TopNavbar({ toggleSidebar }: TopNavbarProps) {
         </button>
       </div>
       <div className="flex items-center gap-[15px]">
-        <div className="w-10 h-10 rounded-full flex justify-center items-center border border-bordercolor cursor-pointer">
-          <SunIcon className="text-secondary w-5 h-5" />
+        <div className="w-10 h-10 rounded-full flex justify-center items-center border border-bordercolor cursor-pointer group hover:bg-purple transition-all divide-purple-500">
+          <SunIcon className="text-secondary w-5 h-5 group-hover:text-whitelight" />
         </div>
-        <div className="w-10 h-10 rounded-full flex justify-center items-center border border-bordercolor cursor-pointer">
-          <BellIcon className="text-secondary w-5 h-5" />
+        <div className="w-10 h-10 rounded-full flex justify-center items-center border border-bordercolor cursor-pointer group hover:bg-purple transition-all divide-purple-500">
+          <BellIcon className="text-secondary w-5 h-5  group-hover:text-whitelight" />
         </div>
          <Menu as="div" className="relative">
         {({ open }) => (
