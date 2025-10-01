@@ -71,7 +71,7 @@ export default function PasswordRecovery(): JSX.Element {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            <Form className="md:mx-11">
+            <Form className="lg:mx-11">
               {/* Email Field */}
               <div className="mb-5">
                 <label className="block text-base font-normal mb-[10px]">
