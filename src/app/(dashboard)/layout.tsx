@@ -3,14 +3,12 @@
 import { ReactNode, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import TopNavbar from "@/components/TopNavbar";
-
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <>
     {/* <div className="flex min-h-screen">
@@ -57,7 +55,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <main className="p-4 md:p-[25px] flex-1">
           {children}
         </main>
-              <div className="pb-[25px] px-[25px]">
+         <div className="pb-[25px] px-[25px]">
              <div className="flex justify-between items-center flex-col md:flex-row gap-4 text-center md:text-left">
          <p className="text-paragray text-sm leading-[14px] font-normal">Copyright © 2025 ETH OpenSource Wallet. All rights reserved.</p>
         <div className="flex gap-[25px]">

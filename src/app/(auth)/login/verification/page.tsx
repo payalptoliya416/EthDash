@@ -5,12 +5,8 @@ import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { JSX } from "react";
 import Image from "next/image";
+import { VerificationFormValues } from "@/types/signup";
 // import { useRouter } from "next/navigation";
-
-// 🔹 Define form values type
-interface VerificationFormValues {
-  otp: string[];
-}
 
 export default function Verification(): JSX.Element {
   // const router = useRouter();

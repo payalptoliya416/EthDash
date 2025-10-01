@@ -6,11 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { JSX } from "react";
 import Image from "next/image";
-
-// 🔹 Form values type
-interface PasswordRecoveryValues {
-  email: string;
-}
+import { PasswordRecoveryValues } from "@/types/signup";
 
 export default function PasswordRecovery(): JSX.Element {
   const router = useRouter();

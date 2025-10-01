@@ -2,12 +2,6 @@
 
 :root {
   --text-color: #121212;
-  --text-color2: #2a2a2a;
-  --bg-purple: #6c24e0;
-  --bg-white: #ffffff;
-  --text-color: #717171;
-  --text-gray-color: #848484;
-  --text-border-color: #e7e7e7;
 }
 
 @theme inline {
@@ -31,6 +25,7 @@
   --color-afterline:#D0D0D0;
   --color-bodybg: #F8F4FD;
   --color-linkgray : #888888;
+  --color-red: #F0381F;
 }
 
 body {

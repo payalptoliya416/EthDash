@@ -21,9 +21,6 @@ export default function TopNavbar({ toggleSidebar }: TopNavbarProps) {
         <div className="w-10 h-10 rounded-full flex justify-center items-center border border-bordercolor">
           <BellIcon className="text-secondary w-5 h-5" />
         </div>
-        {/* <div>
-          <span className="text-base text-primary">Jane Cooper <ChevronDownIcon className="w-3 h-3 inline-block text-darkblack ms-3"/> </span>
-        </div> */}
          <Menu as="div" className="relative">
         {({ open }) => (
           <>

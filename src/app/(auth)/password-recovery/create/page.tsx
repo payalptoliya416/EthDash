@@ -7,12 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-
-// 🔹 Form Values Type
-interface CreatePasswordValues {
-  newPassword: string;
-  confirmPassword: string;
-}
+import { CreatePasswordValues } from "@/types/signup";
 
 export default function Create(): JSX.Element {
   const [showPassword, setShowPassword] = useState(false);

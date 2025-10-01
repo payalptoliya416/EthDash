@@ -8,13 +8,8 @@ import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
+import { LoginFormValues } from "@/types/signup";
 
-// 🔹 Define types for form values
-interface LoginFormValues {
-  email: string;
-  password: string;
-  remember: boolean;
-}
 
 export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);

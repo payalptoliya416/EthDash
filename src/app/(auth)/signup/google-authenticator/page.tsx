@@ -6,7 +6,6 @@ import React, { JSX } from "react";
 export default function GoogleAuthentication(): JSX.Element {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      {/* Left Section */}
       <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between">
         <div className="p-6 pb-0 mb-9">
           <a href="javascript:void(0)">

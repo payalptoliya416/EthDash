@@ -1,7 +1,6 @@
 import { DocumentDuplicateIcon, EyeIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 
-
 type Transaction = {
   id: number;
   action: "Deposit" | "Withdrawal";
@@ -65,7 +64,6 @@ const transactions: Transaction[] = [
     status: "Completed",
   },
 ];
-
 
 function Overview() {
   return (
