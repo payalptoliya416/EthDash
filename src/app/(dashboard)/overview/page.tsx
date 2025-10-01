@@ -224,13 +224,6 @@ function Overview() {
         <h4 className="font-medium text-base md:text-lg leading-[20px] mb-[11px] text-primary">The Benefits of</h4>
         <h2 className="text-primary text-2xl md:text-[28px] leading-[28px] font-bold uppercase">Cryptocurrency</h2>
     </div>
-    {/* <div className="flex justify-between items-center flex-col md:flex-row gap-4 text-center md:text-left">
-         <p className="text-paragray text-sm leading-[14px] font-normal">Copyright © 2025 ETH OpenSource Wallet. All rights reserved.</p>
-        <div className="flex gap-[25px]">
-            <a href="#" className="text-paragray text-sm leading-[14px] font-normal">Privacy policy</a>
-            <a href="#" className="text-paragray text-sm leading-[14px] font-normal">Terms use</a>
-        </div>
-    </div> */}
     </>
   );
 }

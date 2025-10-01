@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
     <div className="flex flex-col justify-between h-screen bg-whitelight border-r border-[#D0D0D0] sticky top-0 z-[999]">
       <div>
         <div className="py-3 md:py-5 px-5 flex justify-center">
-         <a href="#"> <img src="/logo.png" alt="Logo" /></a>
+         <a href="javascript:void(0)"> <img src="/logo.png" alt="Logo" /></a>
         </div>
         <hr className="mx-[10px] text-[#E7E7E7]" />
         <nav className="py-5 px-3">

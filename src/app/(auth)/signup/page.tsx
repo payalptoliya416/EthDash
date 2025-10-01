@@ -65,7 +65,7 @@ const SignupPage: React.FC = () => {
         {/* Logo */}
         <div className="p-6 pb-0 mb-9">
           <a href="javascript:void(0)">
-            <img src="/logo.png" alt="Logo" />
+            <img src="/logo.png" alt="Logo" className="mb-3"/>
           </a>
         </div>
 
