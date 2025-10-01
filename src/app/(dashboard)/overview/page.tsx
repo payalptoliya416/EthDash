@@ -106,9 +106,10 @@ function Overview() {
     values: DepositFormValues,
     { resetForm }: FormikHelpers<DepositFormValues>
   ) => {
-    console.log('Form Submitted:', values);
+    toast.success('Form Submitted');
     resetForm();
   };
+  
   return (
     <>
     <Toaster position="top-right"/>
