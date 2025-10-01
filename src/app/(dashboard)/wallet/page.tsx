@@ -1,10 +1,11 @@
+import Image from "next/image"
 
 function Wallet() {
   return (
     <div className="grid grid-cols-12 gap-5">
        <div className="col-span-12 md:col-span-6 common-bg">
            <div className="flex items-center gap-[18px]">
-            <img src="/wallet1.png" alt="" />
+            <Image src="/wallet1.png" alt="wallet" width={62} height={62}/>
             <div>
                 <h3 className="text-secondary text-base md:text-lg leading-5 mb-3 mb-base md:mb-[15px] font-medium">USDT Available Balance</h3>
                 <h2 className="text-purple text-2xl md:text-[32px] leading-[32px] font-bold">0.00 USDT</h2>
@@ -13,7 +14,7 @@ function Wallet() {
        </div>
        <div className="col-span-12 md:col-span-6 common-bg">
            <div className="flex items-center gap-[18px]">
-            <img src="/wallet2.png" alt="" />
+            <Image src="/wallet2.png" alt="wallet" width={62} height={62}/>
             <div>
                 <h3 className="text-secondary text-base md:text-lg leading-5 mb-3 mb-base md:mb-[15px] font-medium">ETH Available Balance</h3>
                 <h2 className="text-purple text-2xl md:text-[32px] leading-[32px] font-bold">0.00 ETH</h2>

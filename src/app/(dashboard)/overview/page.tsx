@@ -1,4 +1,5 @@
 import { DocumentDuplicateIcon, EyeIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+import Image from "next/image";
 
 
 type Transaction = {
@@ -79,15 +80,15 @@ function Overview() {
         <div>
             <h3 className="text-lg font-medium mb-[10px] text-accetgray">Recovered Funds Balance</h3>
             <div className="flex gap-[10px] items-center mb-3"> 
-                 <div><img src="/t1.png" alt="" /></div>
+                 <div><Image src="/t1.png" alt="funds" width={24} height={24}/></div>
                 <h2 className="text-purple text-[28px] leading-[28px] font-bold">1.00 USDT</h2>
             </div>
             <div className="flex items-center flex-wrap gap-2">
                 <span className="text-sm leading-[14px] font-medium mr-[10px] text-darkblack">Smart contract address :</span>
                  <button className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start">0xdAC17F958D2ee523a2206206994597C13D831ec7</button>
                  <div className="flex items-center gap-[7px]">
-                    <EyeIcon className="h-4 w-4 text-accetgray"/>
-                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray"/>
+                    <EyeIcon className="h-4 w-4 text-accetgray cursor-pointer"/>
+                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray cursor-pointer"/>
                  </div>
             </div> 
         </div>
@@ -120,7 +121,7 @@ function Overview() {
             <div className="col-span-12 lg:col-span-2 flex items-end">
                 <button
                 type="submit"
-                className="w-full py-2 md:py-3 rounded bg-purple text-whitelight text-base hover:bg-purple/90 transition"
+                className="w-full py-2 md:py-3 rounded bg-purple text-whitelight text-base hover:bg-purple/90 transition cursor-pointer"
                 >
                 Deposit
                 </button>
@@ -130,8 +131,8 @@ function Overview() {
                 <span className="text-sm leading-[14px] font-medium mr-[10px] text-darkblack">Your  ETH wallet address :</span>
                  <button className="bg-lightgray py-[7px] px-[10px] rounded me-[15px] text-sm leading-[14px] break-all text-start">0x....23123123132131dsada</button>
                  <div className="flex items-center gap-[7px]">
-                    <EyeIcon className="h-4 w-4 text-accetgray"/>
-                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray"/>
+                    <EyeIcon className="h-4 w-4 text-accetgray cursor-pointer"/>
+                    <DocumentDuplicateIcon className="w-4 h-4 text-accetgray cursor-pointer"/>
                  </div>
             </div> 
         </div>

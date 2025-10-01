@@ -94,13 +94,13 @@ function BankWithdrawal() {
           </div>
         </div>
         <div className="flex justify-end">
-          <button type="submit" className="py-[10px] px-5 bg-purple text-whitelight rounded text-base leading-[16px] font-medium">Submit</button>
+          <button type="submit" className="py-[10px] px-5 bg-purple text-whitelight rounded text-base leading-[16px] font-medium cursor-pointer">Submit</button>
         </div>
       </div>
         <div className="common-bg mb-[35px]">
           <div className="flex justify-between items-center mb-[31px] flex-wrap gap-4">
-            <h3 className="text-primary text-lg md:text-2xl md:leading-[24px] font-medium text-primary mb-0">Available Balance for Withdrawal</h3>
-            <button type="submit" className="py-[10px] px-5 bg-purple text-whitelight rounded text-base leading-[16px] font-medium">Withdrawal</button>
+            <h3 className="text-primary text-lg xl:text-2xl md:leading-[24px] font-medium text-primary mb-0">Available Balance for Withdrawal</h3>
+            <button type="submit" className="py-[10px] px-5 bg-purple text-whitelight rounded text-base leading-[16px] font-medium cursor-pointer">Withdrawal</button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 items-center flex-wrap">
              <button className="py-3 xl:py-6 px-5 rounded border border-bordercolor text-secondary text-lg xl:text-[26px] leading-[26px] font-medium w-full  text-start">0.00 USD</button>

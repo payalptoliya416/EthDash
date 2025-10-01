@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
                 <li key={item.label}>
                   <a
                     href={item.href}
-                    className={`flex items-center gap-3 px-5 py-3 rounded-md transition-all duration-300 group
+                    className={`flex items-center gap-3 px-5 py-3 rounded-md transition-all duration-300 group text-sm lg:text-base
                       ${isActive ? "bg-purple text-white" : "text-darkgray hover:bg-purple hover:text-white"}
                     `}>
                    <Icon className={`w-5 h-5 transition-colors duration-300 ${isActive ? "text-white" : "text-[#717171] group-hover:text-whitelight" }`}/>
