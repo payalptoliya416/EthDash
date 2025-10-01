@@ -184,8 +184,9 @@ const [step, setStep] = useState(1);
        <div className="flex justify-center mt-10">
       <div className="w-full max-w-[635px] bg-whitelight shadow-lg rounded-lg px-7 md:px-10 py-7 md:py-8">
         {/* Stepper */}
-        <div className="flex items-center justify-center gap-24 mb-10">
-          {[1, 2].map((s) => (
+        <div className="flex items-center justify-center mb-10">
+          {[1, 2].map((s, index, array) => (
+            <>
             <div key={s} className="flex flex-col items-center gap-2">
               <span
                 className={`w-12 h-12 rounded-full flex justify-center items-center font-bold text-lg ${
@@ -196,6 +197,13 @@ const [step, setStep] = useState(1);
               </span>
               <h3 className="text-sm text-accetgray">Step</h3>
             </div>
+             {index < array.length - 1 && (
+                <div
+                className={`h-0.5 w-24 transition-colors duration-300 -mt-6
+                    ${step > s ? "bg-purple" : "bg-bordercolor"}`}
+                ></div>
+            )}
+            </>
           ))}
         </div>
 
