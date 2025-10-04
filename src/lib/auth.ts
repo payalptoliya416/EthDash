@@ -2,6 +2,13 @@ import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import type { NextAuthOptions } from "next-auth";
 
+// Define a type for the user stored in JWT and session
+interface AuthUser {
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -11,7 +18,14 @@ export const authOptions: NextAuthOptions = {
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-      
+      profile(profile) {
+        // Map Facebook profile to our user type
+        return {
+          id: profile.id,
+          name: profile.name,
+          email: profile.email,
+        };
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
@@ -19,26 +33,24 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/signup", 
+    signIn: "/signup",
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return "/overview"; 
+      return "/overview"; // redirect after login
     },
     async jwt({ token, account, profile }) {
-      // Include profile info in token if available
       if (account && profile) {
         token.user = {
           name: profile.name || "",
           email: profile.email || "",
-        };
+        } as AuthUser;
       }
       return token;
     },
     async session({ session, token }) {
-      // Make sure session.user contains name/email
       if (token.user) {
-        session.user = token.user as any;
+        session.user = token.user as AuthUser; // properly typed
       }
       return session;
     },
