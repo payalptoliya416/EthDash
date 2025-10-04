@@ -6,6 +6,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useSession } from "next-auth/react";
 
 type Transaction = {
   id: number;
@@ -109,7 +110,20 @@ function Overview() {
     toast.success('Form Submitted');
     resetForm();
   };
-  
+
+//     const { data: session } = useSession();
+
+//   if (!session) return <p>Loading...</p>;
+// const { name, email }: any = session.user;
+
+// const nameParts = name ? name.split(" ") : ["", ""]; 
+// const firstName = nameParts[0] || "";
+// const lastName = nameParts.slice(1).join(" ") || ""; 
+
+// console.log("First Name:", firstName);
+// console.log("Last Name:", lastName);
+// console.log("Email:", email);
+
   return (
     <>
     <Toaster position="top-right"/>

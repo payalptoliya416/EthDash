@@ -9,6 +9,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { SignupFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
+import AuthButton from "@/components/AuthButton";
 
 const SignupPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -37,14 +38,13 @@ const SignupPage: React.FC = () => {
     confirmPassword: "",
   };
 
-  // Handle submit with types
   const handleSubmit = (
     values: SignupFormValues,
     { resetForm }: FormikHelpers<SignupFormValues>
   ) => {
     if (values.email && values.password) {
       toast.success("Form Submitted!");
-      setTimeout(() => {
+      setTimeout(() => {  
         router.push("/signup/google-authenticator");
       }, 1500);
       resetForm();
@@ -212,22 +212,23 @@ const SignupPage: React.FC = () => {
               </div>
 
               {/* Google Login */}
-              <a
+              {/* <a
                 href="javascript:void(0)"
                 className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-4 cursor-pointer"
               >
                 <img src="/goggle.png" alt="Google" />
                 <h3 className="text-linkgray text-base font-normal">Continue with Google</h3>
-              </a>
+              </a> */}
 
               {/* Facebook Login */}
-              <a
+              {/* <a
                 href="javascript:void(0)"
                 className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
               >
                 <img src="/facebook.png" alt="Facebook" />
                 <h3 className="text-linkgray text-base font-normal">Continue with Facebook</h3>
-              </a>
+              </a> */}
+                 <AuthButton />
 
               {/* Already have account */}
               <div className="text-center">
