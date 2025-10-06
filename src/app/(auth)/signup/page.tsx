@@ -10,6 +10,7 @@ import Image from "next/image";
 import { SignupFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
 import AuthButton from "@/components/AuthButton";
+import { authService } from "@/lib/api/authService";
 
 const SignupPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -29,7 +30,6 @@ const SignupPage: React.FC = () => {
       .required("Confirm Password is required"),
   });
 
-  //  Initial form values
   const initialValues: SignupFormValues = {
     name: "",
     surname: "",
@@ -38,18 +38,34 @@ const SignupPage: React.FC = () => {
     confirmPassword: "",
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: SignupFormValues,
-    { resetForm }: FormikHelpers<SignupFormValues>
+    { resetForm, setSubmitting }: FormikHelpers<SignupFormValues>
   ) => {
-    if (values.email && values.password) {
-      toast.success("Form Submitted!");
-      setTimeout(() => {  
-        router.push("/signup/google-authenticator");
-      }, 1500);
+    try {
+      const payload = {
+        first_name: values.name,
+        last_name: values.surname,
+        email: values.email,
+        password: values.password,
+        confirm_password: values.confirmPassword,
+      };
+
+      const res = await authService.signup(payload);
+
+      toast.success(`${res.message}`);
+
+      if(res.status === "success"){
+        setTimeout(() => {
+          router.push("/login");
+        }, 1500);
+      }
+
       resetForm();
-    } else {
-      toast.error("Please fill all required fields ❌");
+    } catch (error: any) {
+      toast.error(error.message || "Signup failed ❌");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -57,7 +73,6 @@ const SignupPage: React.FC = () => {
     <motion.div className="min-h-screen flex flex-col md:flex-row"   initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}>
-      <Toaster position="top-right" />
       <div className="md:w-1/2 flex flex-col order-2 md:order-1">
         {/* Logo */}
         <div className="p-6 pb-0 mb-9">

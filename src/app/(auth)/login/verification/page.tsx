@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 import { JSX } from "react";
 import Image from "next/image";
-import { VerificationFormValues } from "@/types/signup";
+import { VerificationValue } from "@/types/signup";
 import { motion } from "framer-motion";
 // import { useRouter } from "next/navigation";
 
@@ -24,14 +24,14 @@ export default function Verification(): JSX.Element {
   });
 
   // 🔹 Initial Values
-  const initialValues: VerificationFormValues = {
+  const initialValues: VerificationValue = {
     otp: ["", "", "", "", ""],
   };
 
   // 🔹 Handle Submit
   const handleSubmit = (
-    values: VerificationFormValues,
-    { resetForm }: FormikHelpers<VerificationFormValues>
+    values: VerificationValue,
+    { resetForm }: FormikHelpers<VerificationValue>
   ): void => {
     const otpCode = values.otp.join("");
     if (otpCode.length === 5) {
@@ -78,7 +78,7 @@ export default function Verification(): JSX.Element {
       value: string,
       shouldValidate?: boolean
     ) => void,
-    values: VerificationFormValues
+    values: VerificationValue
   ) => {
     if (e.key === "Backspace") {
       if (values.otp[index] === "") {

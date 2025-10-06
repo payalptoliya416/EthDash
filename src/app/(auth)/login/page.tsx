@@ -10,6 +10,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { LoginFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
+import { authService } from "@/lib/api/authService";
 
 export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -29,22 +30,40 @@ export default function Login(): JSX.Element {
   };
 
   // 🔹 Form Submit Handler
-  const handleSubmit = (
-    values: LoginFormValues,
-    { resetForm }: FormikHelpers<LoginFormValues>
-  ): void => {
-    if (values.email && values.password) {
-      toast.success("Login Submitted!");
+const handleSubmit = async (
+  values: LoginFormValues,
+  { resetForm, setSubmitting }: FormikHelpers<LoginFormValues>
+) => {
+  try {
+    const payload = {
+      email: values.email,
+      password: values.password,
+      // optionally add social flags
+      // is_google: false,
+      // is_facebook: false,
+    };
 
-      setTimeout(() => {
-        router.push("/login/verification");
-      }, 1500);
-
-      resetForm();
-    } else {
-      toast.error("Please fill all required fields ❌");
+    const res = await authService.login(payload);
+    if(res.status === "success"){
+      toast.success('User Login Successfully');
     }
-  };
+    console.log("Login Response:", res);
+
+    if (res.token) {
+      localStorage.setItem("authToken", res.token);
+    }
+
+    setTimeout(() => {
+      router.push("/overview");
+    }, 1500);
+
+    resetForm();
+  } catch (error: any) {
+    toast.error(error.message || "Login failed ❌");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <motion.div className="min-h-screen flex flex-col md:flex-row"

@@ -9,6 +9,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { CreatePasswordValues } from "@/types/signup";
 import { motion } from "framer-motion";
+import { authService, ResetPasswordData } from "@/lib/api/authService";
 
 export default function Create(): JSX.Element {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,34 +18,47 @@ export default function Create(): JSX.Element {
 
   // 🔹 Validation Schema
   const validationSchema = Yup.object({
-    newPassword: Yup.string()
+     email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("New password is required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("newPassword"), undefined], "Passwords must match")
+    confirm_password: Yup.string()
+      .oneOf([Yup.ref("password"), undefined], "Passwords must match")
       .required("Confirm password is required"),
   });
 
   // 🔹 Initial Values
   const initialValues: CreatePasswordValues = {
-    newPassword: "",
-    confirmPassword: "",
+    email: "",
+    password: "",
+    confirm_password: "",
   };
 
   // 🔹 Submit Handler
-  const handleSubmit = (
-    values: CreatePasswordValues,
-    { resetForm }: FormikHelpers<CreatePasswordValues>
-  ): void => {
-    toast.success("Password changed successfully");
-    console.log("New Password Values:", values);
-
-    setTimeout(() => {
-      router.push("/login");
-    }, 1500);
-
-    resetForm();
-  };
+  const handleSubmit = async (
+      values: ResetPasswordData,
+      { resetForm }: FormikHelpers<ResetPasswordData>
+    ) => {
+      try {
+        const response = await authService.resetPassword({
+          email: values.email,
+          password: values.password,
+          confirm_password: values.confirm_password,
+        });
+  
+        if (response.success === "success") {
+          toast.success(response.message || "Password reset successfully");
+          setTimeout(() => router.push("/login"), 1500);
+          resetForm();
+        } else {
+          toast.error(response.message || "Failed to reset password");
+        }
+      } catch (error: any) {
+        console.error("Reset password error:", error);
+        toast.error(error?.message || "Something went wrong");
+      }
+    };
+  
 
   return (
     <motion.div className="min-h-screen flex flex-col md:flex-row"
@@ -75,6 +89,22 @@ export default function Create(): JSX.Element {
             onSubmit={handleSubmit}
           >
             <Form className="lg:mx-11">
+                  <div className="mb-5">
+                                    <label className="block text-base font-normal mb-[10px]">
+                                      Email Address
+                                    </label>
+                                    <Field
+                                      type="email"
+                                      name="email"
+                                      placeholder="Enter email Address"
+                                      className="input leading-[18px]"
+                                    />
+                                    <ErrorMessage
+                                      name="email"
+                                      component="div"
+                                      className="text-red-500 text-sm mt-1"
+                                    />
+                                  </div>
               {/* New Password */}
               <div className="mb-5">
                 <label className="block text-base font-normal mb-[10px]">
@@ -83,7 +113,7 @@ export default function Create(): JSX.Element {
                 <div className="relative">
                   <Field
                     type={showPassword ? "text" : "password"}
-                    name="newPassword"
+                    name="password"
                     placeholder="Enter new password"
                     className="input leading-[18px]"
                   />
@@ -100,7 +130,7 @@ export default function Create(): JSX.Element {
                   )}
                 </div>
                 <ErrorMessage
-                  name="newPassword"
+                  name="password"
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
@@ -114,7 +144,7 @@ export default function Create(): JSX.Element {
                 <div className="relative">
                   <Field
                     type={showConfirm ? "text" : "password"}
-                    name="confirmPassword"
+                    name="confirm_password"
                     placeholder="Enter confirm password"
                     className="input leading-[18px]"
                   />
@@ -131,7 +161,7 @@ export default function Create(): JSX.Element {
                   )}
                 </div>
                 <ErrorMessage
-                  name="confirmPassword"
+                  name="confirm_password"
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />

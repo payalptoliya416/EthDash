@@ -11,8 +11,9 @@ export interface PasswordRecoveryValues {
 }
 
 export interface CreatePasswordValues {
-  newPassword: string;
-  confirmPassword: string;
+  email: string;
+  password: string;
+  confirm_password: string;
 }
 
 export interface LoginFormValues {
@@ -22,5 +23,10 @@ export interface LoginFormValues {
 }
 
 export interface VerificationFormValues {
+  email: string;
+  otp: string[];
+}
+
+export interface VerificationValue {
   otp: string[];
 }

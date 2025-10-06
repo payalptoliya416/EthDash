@@ -8,6 +8,7 @@ import { JSX } from "react";
 import Image from "next/image";
 import { PasswordRecoveryValues } from "@/types/signup";
 import { motion } from "framer-motion";
+import { authService } from "@/lib/api/authService";
 
 export default function PasswordRecovery(): JSX.Element {
   const router = useRouter();
@@ -25,23 +26,33 @@ export default function PasswordRecovery(): JSX.Element {
   };
 
   // 🔹 Submit Handler
-  const handleSubmit = (
-    values: PasswordRecoveryValues,
-    { resetForm }: FormikHelpers<PasswordRecoveryValues>
-  ): void => {
-    if (values.email) {
-      toast.success("Reset link sent to your email");
-      console.log("Forgot Password:", values);
+ const handleSubmit = async (
+  values: PasswordRecoveryValues,
+  { resetForm, setSubmitting }: FormikHelpers<PasswordRecoveryValues>
+) => {
+  try {
+    const payload = {
+      email: values.email,
+    };
 
-      setTimeout(() => {
-        router.push("/password-recovery/create");
-      }, 1500);
+    const res = await authService.forgotPassword(payload);
 
-      resetForm();
-    } else {
-      toast.error("Please enter your email ❌");
-    }
-  };
+    toast.success(res.message || "Reset link sent to your email");
+
+    console.log("Forgot Password Response:", res);
+
+    // Navigate to create new password page
+    setTimeout(() => {
+      router.push("/password-recovery/verify-otp");
+    }, 1500);
+
+    resetForm();
+  } catch (error: any) {
+    toast.error(error.message || "Failed to send reset link ❌");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   return (
     <motion.div className="min-h-screen flex flex-col md:flex-row"
