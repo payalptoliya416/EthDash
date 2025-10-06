@@ -37,8 +37,9 @@ export const authOptions:NextAuthOptions = {
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return "/overview"; // redirect after login
-    },
+  if (url.includes("/signup")) return "/signup";
+  return "/overview";
+},
     async jwt({ token, account, profile }) {
       if (account && profile) {
         token.user = {
@@ -56,3 +57,31 @@ export const authOptions:NextAuthOptions = {
     },
   },
 };
+
+
+export interface SocialSignupData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password?: string;
+  confirm_password?: string;
+  is_google?: boolean;
+  is_facebook?: boolean;
+}
+
+export async function socialSignup(data: SocialSignupData) {
+  try {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error("Failed to signup");
+
+    return res.json();
+  } catch (error) {
+    console.error("Social signup error:", error);
+    throw error;
+  }
+}

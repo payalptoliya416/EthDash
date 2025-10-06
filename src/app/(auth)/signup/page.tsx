@@ -210,25 +210,10 @@ const SignupPage: React.FC = () => {
                 <span className="px-2 text-gray-400 text-lg font-medium">or</span>
                 <hr className="flex-1 border-gray-300" />
               </div>
-
-              {/* Google Login */}
-              {/* <a
-                href="javascript:void(0)"
-                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-4 cursor-pointer"
-              >
-                <img src="/goggle.png" alt="Google" />
-                <h3 className="text-linkgray text-base font-normal">Continue with Google</h3>
-              </a> */}
-
-              {/* Facebook Login */}
-              {/* <a
-                href="javascript:void(0)"
-                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
-              >
-                <img src="/facebook.png" alt="Facebook" />
-                <h3 className="text-linkgray text-base font-normal">Continue with Facebook</h3>
-              </a> */}
-                 <AuthButton />
+           </Form>
+          </Formik>
+          <div className="lg:mx-11">
+              <AuthButton />
 
               {/* Already have account */}
               <div className="text-center">
@@ -242,8 +227,8 @@ const SignupPage: React.FC = () => {
                   </a>
                 </p>
               </div>
-            </Form>
-          </Formik>
+          </div>
+            
         </div>
 
         {/* Footer */}

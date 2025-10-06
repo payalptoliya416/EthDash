@@ -2,6 +2,7 @@ import { BellIcon, ChevronDownIcon, SunIcon } from "@heroicons/react/24/outline"
 import { Bars3BottomLeftIcon } from "@heroicons/react/24/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import LogoutButton from "./LogoutButton";
 interface TopNavbarProps {
   toggleSidebar: () => void;
 }
@@ -65,17 +66,12 @@ export default function TopNavbar({ toggleSidebar }: TopNavbarProps) {
                     )}
                   </Menu.Item>
                   <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#logout"
-                        className={`block px-4 py-2 text-sm text-red-600 ${
-                          active ? "bg-gray-100" : ""
-                        }`}
-                      >
-                        Logout
-                      </a>
-                    )}
-                  </Menu.Item>
+                {({ active }) => (
+                  <LogoutButton
+                    className={`w-full text-left cursor-pointer ${active ? "bg-gray-100" : ""}`}
+                  />
+                )}
+              </Menu.Item>
                 </div>
               </Menu.Items>
             </Transition>

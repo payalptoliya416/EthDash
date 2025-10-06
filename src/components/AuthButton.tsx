@@ -1,39 +1,27 @@
 "use client";
-
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AuthButton() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();   
 
   const handleGoogleLogin = async () => {
-    await signIn("google", { redirect: false });
+    await signIn("google");
   };
 
   const handleFacebookLogin = async () => {
-    await signIn("facebook", { redirect: false });
+    await signIn("facebook");
   };
 
-  useEffect(() => {
-    if (session?.user) {
-      const { name, email } = session.user;
-
-      // Split name into first and last
-      const nameParts = name ? name.split(" ") : ["", ""];
-      const firstName = nameParts[0] || "";
-      const lastName = nameParts.slice(1).join(" ") || "";
-
-      console.log("User Info:");
-      console.log("First Name:", firstName);
-      console.log("Last Name:", lastName);
-      console.log("Email:", email);
-
-      // Redirect
-      router.push("/overview");
+useEffect(() => {
+    if (status === "authenticated") {
+      router.replace("/overview");
     }
-  }, [session, router]);
+  }, [status, router]);
+
+  if (status === "loading") return null;
 
   return (
     <div className="flex flex-col gap-4">
