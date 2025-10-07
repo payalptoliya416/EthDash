@@ -3,58 +3,83 @@
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 import { authService } from "@/lib/api/authService";
 
-export default function AuthButton() {
+interface AuthButtonProps {
+  mode: "login" | "register";
+}
+
+export default function AuthButton({ mode }: AuthButtonProps) {
   const router = useRouter();
   const { data: session, status } = useSession();
+  console.log("session",session)
+  const [providerSelected, setProviderSelected] = useState<"google" | "facebook" | null>(null);
 
-  const registerSocialUser = async (provider: "google" | "facebook") => {
+const handleSocialAuth = async (provider: "google" | "facebook") => {
+  setProviderSelected(provider);
+  localStorage.setItem("loginProvider", provider);
+
+  toast.success(`Redirecting for ${mode}...`);
+  
+  await signIn(provider, { callbackUrl: "/overview" });
+};
+
+
+useEffect(() => {
+  const sendUserDataToAPI = async () => {
+    if (!session?.user || !providerSelected) return;
+
+    const userEmail = session.user.email || "";
+    const fullName = session.user.name || "";
+    const firstName = fullName.split(" ")[0] || "";
+    const lastName = fullName.split(" ")[1] || "";
+
     try {
-      const result = await signIn(provider, { redirect: false });
+     if (mode === "register") {
+  const payload = {
+    first_name: firstName,
+    last_name: lastName,
+    email: userEmail,
+    is_google: providerSelected === "google",
+    is_facebook: providerSelected === "facebook",
+  };
+  const res = await authService.socialSignup(payload);
+  console.log("Register API response:", res);
 
-      if (result?.error) {
-        toast.error("Login failed!");
-        return;
-      }
+  // Save provider locally
+    } else if (mode === "login") {
+      const payload = {
+        email: userEmail,
+        password: "",
+        is_google: providerSelected === "google",
+        is_facebook: providerSelected === "facebook",
+      };
+      const res = await authService.login(payload);
+      console.log("Login API response:", res);
 
-      // 🔹 Immediately fetch the session
-      const sessionRes = await fetch("/api/auth/session");
-      const sessionData = await sessionRes.json();
+      // Save provider locally
+    }
 
-      if (!sessionData?.user || !sessionData.user.email) {
-        toast.error("Could not fetch user info. Please try again.");
-        return;
-      }
-
-      const user = sessionData.user;
-      const fullName = user.name?.split(" ") || [];
-      const first_name = fullName[0];
-      const last_name = fullName.slice(1).join(" ") || "";
-
-      // 🔹 Call backend safely
-      await authService.socialSignup({
-        first_name,
-        last_name,
-        email: user.email,
-        is_google: provider === "google",
-        is_facebook: provider === "facebook",
-      });
-
-      toast.success("Login successful!");
-      router.replace("/overview");
+      router.push("/overview");
     } catch (error) {
-      console.error("Error registering social user:", error);
-      toast.error("Something went wrong. Please try again.");
+      console.error(`${mode} API error:`, error);
+      toast.error("Something went wrong while calling API.");
+    } finally {
+      setProviderSelected(null);
     }
   };
+
+  sendUserDataToAPI();
+}, [session, providerSelected, mode, router]);
+
 
   if (status === "loading") return null;
 
   return (
     <div className="flex flex-col gap-4">
       <button
-        onClick={() => registerSocialUser("google")}
+        onClick={() => handleSocialAuth("google")}
         className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-4 cursor-pointer"
       >
         <img src="/goggle.png" alt="Google" className="w-5 h-5" />
@@ -64,7 +89,7 @@ export default function AuthButton() {
       </button>
 
       <button
-        onClick={() => registerSocialUser("facebook")}
+        onClick={() => handleSocialAuth("facebook")}
         className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
       >
         <img src="/facebook.png" alt="Facebook" className="w-5 h-5" />

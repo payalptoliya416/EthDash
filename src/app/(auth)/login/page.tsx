@@ -39,9 +39,6 @@ const handleSubmit = async (
     const payload = {
       email: values.email,
       password: values.password,
-      // optionally add social flags
-      // is_google: false,
-      // is_facebook: false,
     };
 
     const res = await authService.login(payload);
@@ -184,7 +181,7 @@ console.log("res",res)
          </Form>
           </Formik>
            <div className="lg:mx-11">
-              <AuthButton />
+              <AuthButton mode="login"/>
               <div className="text-center">
                 <p className="text-base font-normal">
                   Don’t have an account?{" "}

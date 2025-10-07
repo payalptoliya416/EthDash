@@ -228,7 +228,7 @@ const SignupPage: React.FC = () => {
            </Form>
           </Formik>
           <div className="lg:mx-11">
-       <AuthButton />
+       <AuthButton mode="register"/>
               {/* Already have account */}
               <div className="text-center">
                 <p className="text-base font-normal">
