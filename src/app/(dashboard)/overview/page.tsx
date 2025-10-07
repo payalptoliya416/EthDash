@@ -3,7 +3,7 @@
 import { DocumentDuplicateIcon, EyeIcon, EyeSlashIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
@@ -112,7 +112,6 @@ function Overview() {
 
   return (
     <>
-    <Toaster position="top-right"/>
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-12 xl:col-span-7">
         <div className="common-bg mb-5">

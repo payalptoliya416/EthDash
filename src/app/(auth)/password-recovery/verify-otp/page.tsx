@@ -2,7 +2,7 @@
 
 import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Image from "next/image";
 import { VerificationFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
@@ -109,7 +109,6 @@ console.log("response",response)
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <Toaster position="top-right" />
 
       {/* Left Section */}
       <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between">

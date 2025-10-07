@@ -2,7 +2,7 @@
 
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { JSX } from "react";
 import Image from "next/image";
 import { VerificationValue } from "@/types/signup";
@@ -94,7 +94,6 @@ export default function Verification(): JSX.Element {
 
   return (
     <>
-      <Toaster position="top-right" />
       <motion.div className="min-h-screen flex flex-col md:flex-row"
        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}

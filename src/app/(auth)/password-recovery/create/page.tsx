@@ -3,7 +3,7 @@
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { JSX, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -66,7 +66,6 @@ export default function Create(): JSX.Element {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
     >
-      <Toaster position="top-right" />
 
       {/* Left Section */}
       <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between">

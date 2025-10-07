@@ -3,7 +3,7 @@
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { JSX, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -11,6 +11,7 @@ import Image from "next/image";
 import { LoginFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
 import { authService } from "@/lib/api/authService";
+import AuthButton from "@/components/AuthButton";
 
 export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -70,7 +71,6 @@ const handleSubmit = async (
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}>
-      <Toaster position="top-right" />
       <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between ">
         {/* Logo */}
         <div className="p-6 pb-0 mb-9">
@@ -181,26 +181,10 @@ const handleSubmit = async (
                 <span className="px-2 text-gray-400 text-lg font-medium">or</span>
                 <hr className="flex-1 border-gray-300" />
               </div>
-
-              {/* Google Login */}
-              <a
-                href="/signup/google-authenticator"
-                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-5 cursor-pointer"
-              >
-                <img src="/goggle.png" alt="Google Login" />
-                <h3  className="text-linkgray text-base font-normal">Continue with Google</h3>
-              </a>
-
-              {/* Facebook Login */}
-              <a
-                href="javascript:void(0)"
-                className="border border-bordercolor flex justify-center items-center gap-[10px] py-2 mb-[25px] cursor-pointer"
-              >
-                <img src="/facebook.png" alt="Facebook Login" />
-                <h3  className="text-linkgray text-base font-normal">Continue with Facebook</h3>
-              </a>
-
-              {/* Signup redirect */}
+         </Form>
+          </Formik>
+           <div className="lg:mx-11">
+              <AuthButton />
               <div className="text-center">
                 <p className="text-base font-normal">
                   Don’t have an account?{" "}
@@ -212,8 +196,7 @@ const handleSubmit = async (
                   </Link>
                 </p>
               </div>
-            </Form>
-          </Formik>
+           </div>         
         </div>
 
         {/* Footer */}

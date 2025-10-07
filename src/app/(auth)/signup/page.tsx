@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
@@ -228,8 +228,7 @@ const SignupPage: React.FC = () => {
            </Form>
           </Formik>
           <div className="lg:mx-11">
-              <AuthButton />
-
+       <AuthButton />
               {/* Already have account */}
               <div className="text-center">
                 <p className="text-base font-normal">

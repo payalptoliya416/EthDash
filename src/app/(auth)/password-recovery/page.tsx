@@ -2,7 +2,7 @@
 
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { JSX } from "react";
 import Image from "next/image";
@@ -60,7 +60,6 @@ export default function PasswordRecovery(): JSX.Element {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
     >
-      <Toaster position="top-right" />
 
       {/* Left Section */}
       <div className="md:w-1/2 flex flex-col order-2 md:order-1 justify-between">
