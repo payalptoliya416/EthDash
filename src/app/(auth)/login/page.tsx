@@ -56,7 +56,7 @@ console.log("res",res)
     }, 1500);
 
     resetForm();
-  } catch (error: unknown) {
+  } catch (error: any) {
     toast.error(error.message || "Login failed ❌");
   } finally {
     setSubmitting(false);

@@ -14,7 +14,6 @@ export async function apiRequest<T>(
       },
       ...options,
     });
-
     if (!res.ok) {
       const errorText = await res.text();
       const message = JSON.parse(errorText)?.message || res.statusText;
@@ -23,13 +22,8 @@ export async function apiRequest<T>(
     }
 
     return await res.json();
-  } catch (error: unknown) {
-     if (error instanceof Error) {
-      toast.error(error.message || "Network error");
-      throw error;
-    } else {
-      toast.error("Network error");
-      throw new Error("Network error");
-    }
+  } catch (error: any) {
+    toast.error(error.message || "Network error");
+    throw error;
   }
 }
