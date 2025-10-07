@@ -47,7 +47,7 @@ export default function PasswordRecovery(): JSX.Element {
     }, 1500);
 
     resetForm();
-  } catch (error: any) {
+  } catch (error: unknown) {
     toast.error(error.message || "Failed to send reset link ❌");
   } finally {
     setSubmitting(false);

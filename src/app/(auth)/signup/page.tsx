@@ -62,7 +62,7 @@ const SignupPage: React.FC = () => {
       }
 
       resetForm();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error(error.message || "Signup failed ❌");
     } finally {
       setSubmitting(false);

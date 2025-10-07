@@ -53,7 +53,7 @@ export default function Create(): JSX.Element {
         } else {
           toast.error(response.message || "Failed to reset password");
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Reset password error:", error);
         toast.error(error?.message || "Something went wrong");
       }
