@@ -1,13 +1,14 @@
 'use client';
 
 import React from "react";
-import { ArchiveBoxArrowDownIcon, ChartPieIcon, CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxArrowDownIcon, ChartPieIcon, Cog6ToothIcon, CurrencyDollarIcon, WalletIcon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation"; 
 
 const navItems = [
   { label: "Overview", icon: ChartPieIcon, href: "/overview" },
   { label: "Wallet", icon: WalletIcon, href: "/wallet" },
   { label: "Bank Withdrawal", icon: ArchiveBoxArrowDownIcon, href: "/bank-withdrawal" },
+  { label: "Settings", icon: Cog6ToothIcon, href: "/setting" },
 ];
 
 const Sidebar: React.FC = () => {

@@ -49,9 +49,9 @@ const handleSubmit = async (
       toast.success('User Login Successfully');
     }
     console.log("Login Response:", res);
-
-    if (res.token) {
-      localStorage.setItem("authToken", res.token);
+console.log("res",res)
+    if (res.access_token) {
+      localStorage.setItem("authToken", res.access_token);
     }
 
     setTimeout(() => {

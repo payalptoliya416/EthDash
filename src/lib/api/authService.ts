@@ -30,7 +30,7 @@ export interface SignupResponse {
 }
 export interface LoginResponse {
   message: string;
-  token?: string;
+  access_token?: string;
   status: string;
   user?: {
     id: number;
