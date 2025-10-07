@@ -23,8 +23,13 @@ export async function apiRequest<T>(
     }
 
     return await res.json();
-  } catch (error: any) {
+ } catch (error: unknown) {
+  if (error instanceof Error) {
     toast.error(error.message || "Network error");
     throw error;
+  } else {
+    toast.error("An unexpected error occurred");
+    throw new Error("An unexpected error occurred");
   }
+}
 }
