@@ -13,8 +13,8 @@ export interface SocialSignupData {
   first_name: string;
   last_name: string;
   email: string | null | undefined;
-  is_google?: any;
-  is_facebook?: any;
+  is_google?: boolean;
+  is_facebook?: boolean;
 }
 
 export interface SignupResponse {
