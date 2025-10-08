@@ -23,6 +23,7 @@ function Settings() {
   const { data: session } = useSession();
 
   const [loading, setLoading] = useState(false);
+  const [loadingPassword, setLoadingPassword] = useState(false);
   const [loginProvider, setLoginProvider] = useState<string | null>(null);
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -72,7 +73,6 @@ function Settings() {
       });
 
       const data: Enable2FAResponse = await res.json();
-      console.log("2FA API Response:", data);
 
       if (data.status === "success") {
         toast.success(
@@ -111,10 +111,9 @@ function Settings() {
   // ✅ /set-password API call
   const handleSubmit = async (values: typeof initialValues) => {
     try {
-      setLoading(true);
+      setLoadingPassword(true);
 
       const token = localStorage.getItem("authtoken");
-      console.log("token",token)
       if (!token) {
         toast.error("No auth token found!");
         return;
@@ -133,7 +132,6 @@ function Settings() {
       });
 
       const data = await res.json();
-      console.log("Set Password Response:", data);
 
       if (res.ok && data.status === "success") {
         toast.success(data.message || "Password set successfully");
@@ -144,7 +142,7 @@ function Settings() {
       console.error(error);
       toast.error("Network error");
     } finally {
-      setLoading(false);
+      setLoadingPassword(false);
     }
   };
 
@@ -244,10 +242,10 @@ function Settings() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting || loading}
+                  disabled={isSubmitting || loadingPassword}
                   className="submit-form mt-4"
                 >
-                  {loading ? "Saving..." : "Set Password"}
+                  {loadingPassword ? "Saving..." : "Set Password"}
                 </button>
               </Form>
             )}

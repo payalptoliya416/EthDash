@@ -49,7 +49,6 @@ export default function AuthButtonRegister() {
         is_google: provider === "google",
         is_facebook: provider === "facebook",
       };
-
       // Step 4: API call
       const res = await fetch(`${BASE_URL}/register`, {
         method: "POST",
@@ -58,7 +57,11 @@ export default function AuthButtonRegister() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "API request failed");
+      // if (!res.ok) throw new Error(data.message || "API request failed");
+if (!res.ok) {
+    toast.error(data.message || "Registration failed");
+    return; // stop execution, don't redirect
+  }
 
       toast.success("Registration successful!");
 
@@ -67,7 +70,6 @@ export default function AuthButtonRegister() {
     } catch (err: any) {
       console.error("Auth error:", err);
       toast.error(err.message || "Authentication failed");
-      localStorage.removeItem("auth_data");
       localStorage.removeItem("authtoken");
     } finally {
       // reset only the clicked button

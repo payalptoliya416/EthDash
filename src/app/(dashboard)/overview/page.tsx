@@ -8,6 +8,7 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import OverviewPageWrapper from "@/components/OverviewPageWrapper";
 
 type Transaction = {
   id: number;
@@ -92,34 +93,6 @@ function Overview() {
 
   const contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
   const ethAddress = "0x....23123123132131dsada";
-const { data: session, status } = useSession();
-  const router = useRouter();
-  //  useEffect(() => {
-  //   if (status === "loading") return; // Still checking session
-    
-  //   if (!session) {
-  //     router.push("/login");
-  //     return;
-  //   }
-
-  //   // Also check your localStorage data
-  //   const localData = localStorage.getItem("data");
-  //   if (!localData) {
-  //     router.push("/login");
-  //     return;
-  //   }
-
-  //   console.log("User session:", session);
-  //   console.log("Local data:", localData);
-  // }, [session, status, router]);
-
-  // if (status === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (!session) {
-  //   return <div>Redirecting to login...</div>;
-  // }
 
   const copyToClipboard = async (value: string) => {
     try {
@@ -141,7 +114,7 @@ const { data: session, status } = useSession();
   };
 
   return (
-    <>
+      <OverviewPageWrapper>
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-12 xl:col-span-7">
         <div className="common-bg mb-5">
@@ -360,7 +333,7 @@ const { data: session, status } = useSession();
         <h4 className="font-medium text-base md:text-lg leading-[20px] mb-[11px] text-primary">The Benefits of</h4>
         <h2 className="text-primary text-2xl md:text-[28px] leading-[28px] font-bold uppercase">Cryptocurrency</h2>
     </div>
-    </>
+    </OverviewPageWrapper>
   );
 }
 

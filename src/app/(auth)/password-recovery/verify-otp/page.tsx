@@ -40,10 +40,8 @@ const handleSubmit = async (
         email: values.email,
         otp: otpCode,
       });
-console.log("response",response)
       if (response.success === "success") {
         toast.success(response.message || "OTP Verified Successfully ✅");
-        console.log("OTP Verified Response:", response);
         setTimeout(() => {
             router.push("/password-recovery/create");
             }, 1500);

@@ -26,7 +26,6 @@ export default function LogoutButton({ className }: { className?: string }) {
       });
 
       const data = await res.json();
-      console.log("Logout API Response:", data);
 
       if (res.ok) {
         toast.success(data.message || "Logged out successfully");
@@ -37,7 +36,6 @@ export default function LogoutButton({ className }: { className?: string }) {
       localStorage.removeItem("authtoken");
       localStorage.removeItem("loginProvider");
       localStorage.removeItem("qrCodeImage");
-      localStorage.removeItem("isAuthenticated");
       localStorage.removeItem("2fa-enable");
       localStorage.removeItem("2fa-verify");
       localStorage.removeItem("loginEmail");

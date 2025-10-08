@@ -17,7 +17,6 @@ export default function Verification(): JSX.Element {
 
 useEffect(() => {
   const savedEmail = localStorage.getItem("loginEmail");
-  console.log("savedEmail",savedEmail)
   if (savedEmail) {
     setEmail(savedEmail);
   }
@@ -66,7 +65,6 @@ const handleSubmit = async (
     });
 
     const res = await response.json();
-console.log("res",res)
     if (response.ok && res.status === "success" && res.user) {
       // ✅ Store in localStorage
       localStorage.setItem("authtoken", res.access_token);

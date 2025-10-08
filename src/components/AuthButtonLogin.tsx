@@ -43,7 +43,6 @@ export default function AuthButtonLogin() {
         is_google: provider === "google",
         is_facebook: provider === "facebook",
       };
-
       const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -51,9 +50,13 @@ export default function AuthButtonLogin() {
       });
 
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "API request failed");
-
-      localStorage.setItem("loginEmail", data.email);
+    //   if (!response.ok) throw new Error(data.message || "API request failed");
+        if (!response.ok) {
+            toast.error(data.message || "Login failed"); // show error
+            return; // stop execution, don't redirect
+        }
+        
+      localStorage.setItem("loginEmail", data.user?.email);
       localStorage.setItem("authtoken", data.token || data.access_token);
 
       toast.success('Login successful!');
@@ -67,7 +70,6 @@ export default function AuthButtonLogin() {
     } catch (err: any) {
       console.error("Auth error:", err);
       toast.error(err.message || "Authentication failed");
-      localStorage.removeItem("auth_data");
       localStorage.removeItem("authtoken");
     } finally {
       // reset only the clicked button

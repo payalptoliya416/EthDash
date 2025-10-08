@@ -56,6 +56,7 @@ export default function AuthButton({ mode }: AuthButtonProps) {
           is_google: provider === "google",
           is_facebook: provider === "facebook",
         };
+        localStorage.setItem("userData",userData)
       } else {
         userData = {
           email: session.user.email,
@@ -63,6 +64,7 @@ export default function AuthButton({ mode }: AuthButtonProps) {
           is_google: provider === "google",
           is_facebook: provider === "facebook",
         };
+          localStorage.setItem("userData",userData)
       }
 
       const apiUrl =
@@ -104,7 +106,6 @@ export default function AuthButton({ mode }: AuthButtonProps) {
     } catch (err: any) {
       console.error("Auth error:", err);
       toast.error(err.message || "Authentication failed");
-      localStorage.removeItem("auth_data");
       localStorage.removeItem("authtoken");
     } finally {
       setIsProcessing(false);

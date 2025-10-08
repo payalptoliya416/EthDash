@@ -39,7 +39,6 @@ export default function PasswordRecovery(): JSX.Element {
 
     toast.success(res.message || "Reset link sent to your email");
 
-    console.log("Forgot Password Response:", res);
 
     // Navigate to create new password page
     setTimeout(() => {

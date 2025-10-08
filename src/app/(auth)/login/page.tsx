@@ -2,7 +2,7 @@
 
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { JSX, useRef, useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
@@ -11,12 +11,19 @@ import Image from "next/image";
 import { LoginFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
 import { authService } from "@/lib/api/authService";
-import AuthButton from "@/components/AuthButton";
 import AuthButtonLogin from "@/components/AuthButtonLogin";
 
 export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("authtoken");
+
+    if (token) {
+      router.replace("/overview");
+    }
+  }, [router]);
 
   // 🔹 Validation Schema
   const validationSchema = Yup.object({
@@ -30,49 +37,6 @@ export default function Login(): JSX.Element {
     password: "",
     remember: false,
   };
-
-  // 🔹 Form Submit Handler
-// const handleSubmit = async (
-//   values: LoginFormValues,
-//   { resetForm, setSubmitting }: FormikHelpers<LoginFormValues>
-// ) => {
-//   try {
-//     const payload = {
-//       email: values.email,
-//       password: values.password,
-//     };
-
-//     const res = await authService.login(payload);
-//     console.log("res",res);
-
-//     if(res.status === "success"){
-//       toast.success('User Login Successfully');
-//     }
-//     console.log("Login Response:", res);
-//     if (res.access_token) {
-//       localStorage.setItem("authtoken", res.access_token);
-//     if (res.user) {
-//       localStorage.setItem("is2FAEnabled", String(res.user.is_2fa_enabled ?? false)); // default false
-//       localStorage.setItem("is2FAVerify", String(res.user.is_2fa_verify ?? 0));       // default 0
-//     }   
-//     }
-//     const loginEmail = res.email;
-//     localStorage.setItem("loginEmail", loginEmail);
-//       const is2FAEnabled = res["2_fa"] ?? false; // read from root, not user
-//       console.log("is2FAEnabled", is2FAEnabled);
-
-//       if (is2FAEnabled) {
-//         router.push("/login/verification"); // go to verification screen
-//       } else {
-//         router.push("/overview"); 
-//       }
-//     resetForm();
-//   } catch (error: any) {
-//     toast.error(error.message || "Login failed ❌");
-//   } finally {
-//     setSubmitting(false);
-//   }
-// };
 
 const isSubmittingRef = useRef(false);
 
@@ -91,7 +55,6 @@ const handleSubmit = async (
     };
 
     const res = await authService.login(payload);
-    console.log("res", res);
 
     if (res.status === "success") {
       toast.dismiss();
@@ -111,7 +74,6 @@ const handleSubmit = async (
     localStorage.setItem("loginEmail", loginEmail);
 
     const is2FAEnabled = res["2_fa"] ?? false;
-    console.log("is2FAEnabled", is2FAEnabled);
 
     if (is2FAEnabled) {
       router.push("/login/verification");

@@ -57,11 +57,10 @@ export default function Verify2FAPage() {
       if (res.ok) {
         toast.success(data.message || "OTP Verified Successfully");
         resetForm();
+          localStorage.setItem("2fa-enable", "true");
+
         // redirect user after success
-      localStorage.removeItem("authtoken");
-      localStorage.removeItem("loginProvider");
       localStorage.removeItem("qrCodeImage");
-        localStorage.removeItem("isAuthenticated");
         router.push('/setting')
       } else {
         toast.error(data.message || "Invalid OTP, try again");

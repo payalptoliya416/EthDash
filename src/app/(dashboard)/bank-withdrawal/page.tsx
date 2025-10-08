@@ -29,7 +29,6 @@ function BankWithdrawal() {
     values: BankFormValues,
     { resetForm }: FormikHelpers<BankFormValues>
   ) => {
-    console.log("Form submitted:", values);
     resetForm();
   };
 
