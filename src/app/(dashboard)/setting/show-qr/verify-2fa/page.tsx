@@ -4,6 +4,7 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { BASE_URL } from "@/lib/api/requests";
 
 interface VerificationValue {
   otp: string[];
@@ -36,14 +37,14 @@ export default function Verify2FAPage() {
       return;
     }
 
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("authtoken");
     if (!token) {
       toast.error("No auth token found!");
       return;
     }
 
     try {
-      const res = await fetch("http://192.168.29.134:8000/api/verify-2fa", {
+      const res = await fetch(`${BASE_URL}/verify-2fa`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +58,11 @@ export default function Verify2FAPage() {
         toast.success(data.message || "OTP Verified Successfully");
         resetForm();
         // redirect user after success
-        router.push("/overview");
+      localStorage.removeItem("authtoken");
+      localStorage.removeItem("loginProvider");
+      localStorage.removeItem("qrCodeImage");
+        localStorage.removeItem("isAuthenticated");
+        router.push('/setting')
       } else {
         toast.error(data.message || "Invalid OTP, try again");
       }

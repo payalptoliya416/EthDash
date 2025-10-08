@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import * as Yup from "yup";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
+import { BASE_URL } from "@/lib/api/requests";
 
 interface Enable2FAResponse {
   status: "success" | "error";
@@ -27,6 +28,14 @@ function Settings() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  useEffect(() => {
+    const is2FAEnabled = localStorage.getItem("2fa-enable");
+
+    if (is2FAEnabled !== null) {
+      setTwoFactorEnabled(is2FAEnabled === "true");
+    }
+  }, []);
+
   // ✅ Detect and store provider
   useEffect(() => {
     if (session?.user) {
@@ -45,7 +54,7 @@ function Settings() {
     const newValue = !twoFactorEnabled;
     setTwoFactorEnabled(newValue);
 
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("authtoken");
     if (!token) {
       toast.error("No auth token found!");
       return;
@@ -53,7 +62,7 @@ function Settings() {
 
     setLoading(true);
     try {
-      const res = await fetch("http://192.168.29.134:8000/api/enable-2fa", {
+      const res = await fetch(`${BASE_URL}/enable-2fa`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -104,13 +113,14 @@ function Settings() {
     try {
       setLoading(true);
 
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("authtoken");
+      console.log("token",token)
       if (!token) {
         toast.error("No auth token found!");
         return;
       }
 
-      const res = await fetch("http://192.168.29.134:8000/api/set-password", {
+      const res = await fetch(`${BASE_URL}/set-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +137,6 @@ function Settings() {
 
       if (res.ok && data.status === "success") {
         toast.success(data.message || "Password set successfully");
-        router.push("/dashboard");
       } else {
         toast.error(data.message || "Failed to set password");
       }

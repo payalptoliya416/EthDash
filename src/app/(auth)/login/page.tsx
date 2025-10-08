@@ -2,7 +2,7 @@
 
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { JSX, useState } from "react";
+import { JSX, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
@@ -12,6 +12,7 @@ import { LoginFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
 import { authService } from "@/lib/api/authService";
 import AuthButton from "@/components/AuthButton";
+import AuthButtonLogin from "@/components/AuthButtonLogin";
 
 export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -31,10 +32,58 @@ export default function Login(): JSX.Element {
   };
 
   // 🔹 Form Submit Handler
+// const handleSubmit = async (
+//   values: LoginFormValues,
+//   { resetForm, setSubmitting }: FormikHelpers<LoginFormValues>
+// ) => {
+//   try {
+//     const payload = {
+//       email: values.email,
+//       password: values.password,
+//     };
+
+//     const res = await authService.login(payload);
+//     console.log("res",res);
+
+//     if(res.status === "success"){
+//       toast.success('User Login Successfully');
+//     }
+//     console.log("Login Response:", res);
+//     if (res.access_token) {
+//       localStorage.setItem("authtoken", res.access_token);
+//     if (res.user) {
+//       localStorage.setItem("is2FAEnabled", String(res.user.is_2fa_enabled ?? false)); // default false
+//       localStorage.setItem("is2FAVerify", String(res.user.is_2fa_verify ?? 0));       // default 0
+//     }   
+//     }
+//     const loginEmail = res.email;
+//     localStorage.setItem("loginEmail", loginEmail);
+//       const is2FAEnabled = res["2_fa"] ?? false; // read from root, not user
+//       console.log("is2FAEnabled", is2FAEnabled);
+
+//       if (is2FAEnabled) {
+//         router.push("/login/verification"); // go to verification screen
+//       } else {
+//         router.push("/overview"); 
+//       }
+//     resetForm();
+//   } catch (error: any) {
+//     toast.error(error.message || "Login failed ❌");
+//   } finally {
+//     setSubmitting(false);
+//   }
+// };
+
+const isSubmittingRef = useRef(false);
+
 const handleSubmit = async (
   values: LoginFormValues,
   { resetForm, setSubmitting }: FormikHelpers<LoginFormValues>
 ) => {
+  // Prevent multiple triggers
+  if (isSubmittingRef.current) return;
+  isSubmittingRef.current = true;
+
   try {
     const payload = {
       email: values.email,
@@ -42,24 +91,41 @@ const handleSubmit = async (
     };
 
     const res = await authService.login(payload);
-    if(res.status === "success"){
-      toast.success('User Login Successfully');
-    }
-    console.log("Login Response:", res);
-console.log("res",res)
-    if (res.access_token) {
-      localStorage.setItem("authToken", res.access_token);
+    console.log("res", res);
+
+    if (res.status === "success") {
+      toast.dismiss();
+      toast.success("User Login Successfully");
     }
 
-    setTimeout(() => {
+    if (res.access_token) {
+      localStorage.setItem("authtoken", res.access_token);
+
+      if (res.user) {
+        localStorage.setItem("is2FAEnabled", String(res.user.is_2fa_enabled ?? false));
+        localStorage.setItem("is2FAVerify", String(res.user.is_2fa_verify ?? 0));
+      }
+    }
+
+    const loginEmail = res.email;
+    localStorage.setItem("loginEmail", loginEmail);
+
+    const is2FAEnabled = res["2_fa"] ?? false;
+    console.log("is2FAEnabled", is2FAEnabled);
+
+    if (is2FAEnabled) {
+      router.push("/login/verification");
+    } else {
       router.push("/overview");
-    }, 1500);
+    }
 
     resetForm();
   } catch (error: any) {
+    toast.dismiss();
     toast.error(error.message || "Login failed ❌");
   } finally {
     setSubmitting(false);
+    isSubmittingRef.current = false; // unlock submission
   }
 };
 
@@ -90,6 +156,7 @@ console.log("res",res)
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
+            {({ isSubmitting }) => (
             <Form className="mt-7 lg:mx-11">
               {/* Email */}
               <div className="mb-5">
@@ -166,11 +233,13 @@ console.log("res",res)
 
               {/* Submit */}
               <button
-                type="submit"
-                className="submit-form mt-10"
-              >
-                Wallet Access
-              </button>
+            type="submit"
+            className="submit-form mt-10"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Processing..." : "Wallet Access"}
+          </button>
+
 
               {/* Divider */}
               <div className="flex items-center my-4">
@@ -178,10 +247,11 @@ console.log("res",res)
                 <span className="px-2 text-gray-400 text-lg font-medium">or</span>
                 <hr className="flex-1 border-gray-300" />
               </div>
-         </Form>
+         </Form>)}
           </Formik>
            <div className="lg:mx-11">
-              <AuthButton mode="login"/>
+              <AuthButtonLogin/>
+              {/* <AuthButton mode="login"/> */}
               <div className="text-center">
                 <p className="text-base font-normal">
                   Don’t have an account?{" "}

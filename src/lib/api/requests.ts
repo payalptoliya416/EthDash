@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://192.168.29.134:8000/api";
+export const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://192.168.29.134:8000/api";
 
 export async function apiRequest<T>(
   endpoint: string,

@@ -29,4 +29,5 @@ export interface VerificationFormValues {
 
 export interface VerificationValue {
   otp: string[];
+  email : string
 }

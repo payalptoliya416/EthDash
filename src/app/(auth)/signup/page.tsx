@@ -11,6 +11,7 @@ import { SignupFormValues } from "@/types/signup";
 import { motion } from "framer-motion";
 import AuthButton from "@/components/AuthButton";
 import { authService } from "@/lib/api/authService";
+import AuthButtonRegister from "@/components/AuthButtonRegister";
 
 const SignupPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -62,7 +63,7 @@ const SignupPage: React.FC = () => {
       }
 
       resetForm();
-    } catch (error: unknown) {
+    } catch (error: any) {
       toast.error(error.message || "Signup failed ❌");
     } finally {
       setSubmitting(false);
@@ -228,7 +229,8 @@ const SignupPage: React.FC = () => {
            </Form>
           </Formik>
           <div className="lg:mx-11">
-       <AuthButton mode="register"/>
+       <AuthButtonRegister/>
+       {/* <AuthButton mode="register"/> */}
               {/* Already have account */}
               <div className="text-center">
                 <p className="text-base font-normal">

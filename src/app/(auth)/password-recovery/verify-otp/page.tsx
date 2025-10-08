@@ -51,7 +51,7 @@ console.log("response",response)
       } else {
         toast.error(response.message || "OTP verification failed ❌");
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       toast.error(error?.message || "Something went wrong ❌");
       console.error("OTP verification error:", error);
     }

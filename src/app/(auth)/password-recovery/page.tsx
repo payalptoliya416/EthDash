@@ -47,7 +47,7 @@ export default function PasswordRecovery(): JSX.Element {
     }, 1500);
 
     resetForm();
-  } catch (error: unknown) {
+  } catch (error: any) {
     toast.error(error.message || "Failed to send reset link ❌");
   } finally {
     setSubmitting(false);
@@ -107,13 +107,13 @@ export default function PasswordRecovery(): JSX.Element {
                 type="submit"
                 className="submit-form my-5"
               >
-                Send Link
+                Send
               </button>
 
               {/* Resend */}
-              <p className="text-base font-medium underline text-accetgray text-center mb-0 cursor-pointer">
+              {/* <p className="text-base font-medium underline text-accetgray text-center mb-0 cursor-pointer">
                 Resend
-              </p>
+              </p> */}
             </Form>
           </Formik>
         </div>

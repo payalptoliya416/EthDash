@@ -8,7 +8,6 @@ interface AuthUser {
   image?: string | null;
   provider?: string;
 }
-
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -21,16 +20,19 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  session: { strategy: "jwt" },
-  pages: { signIn: "/signup" },
+  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 }, // 30 days
+  pages: { signIn: "/" },
   callbacks: {
+    async signIn({ user, account, profile }) {
+      return true; // Always allow sign in
+    },
     async jwt({ token, account, profile }) {
       if (account && profile) {
         token.user = {
           name: profile.name || "",
           email: profile.email || "",
           provider: account.provider,
-        } as AuthUser;
+        };
       }
       return token;
     },

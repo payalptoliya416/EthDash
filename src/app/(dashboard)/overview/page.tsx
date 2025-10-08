@@ -2,10 +2,12 @@
 
 import { DocumentDuplicateIcon, EyeIcon, EyeSlashIcon, QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type Transaction = {
   id: number;
@@ -90,6 +92,34 @@ function Overview() {
 
   const contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
   const ethAddress = "0x....23123123132131dsada";
+const { data: session, status } = useSession();
+  const router = useRouter();
+  //  useEffect(() => {
+  //   if (status === "loading") return; // Still checking session
+    
+  //   if (!session) {
+  //     router.push("/login");
+  //     return;
+  //   }
+
+  //   // Also check your localStorage data
+  //   const localData = localStorage.getItem("data");
+  //   if (!localData) {
+  //     router.push("/login");
+  //     return;
+  //   }
+
+  //   console.log("User session:", session);
+  //   console.log("Local data:", localData);
+  // }, [session, status, router]);
+
+  // if (status === "loading") {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (!session) {
+  //   return <div>Redirecting to login...</div>;
+  // }
 
   const copyToClipboard = async (value: string) => {
     try {

@@ -1,20 +1,23 @@
 "use client";
 
+import { BASE_URL } from "@/lib/api/requests";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function LogoutButton({ className }: { className?: string }) {
+  const router = useRouter();
+  
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("authtoken");
       if (!token) {
         toast.error("No token found. Please login again.");
-        await signOut({ redirect: true, callbackUrl: "/signup" });
+        // await signOut({ redirect: true, callbackUrl: "/signup" });
         return;
       }
 
-      // 🔹 Call your backend logout API
-      const res = await fetch("http://192.168.29.134:8000/api/logout", {
+      const res = await fetch(`${BASE_URL}/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,17 +33,21 @@ export default function LogoutButton({ className }: { className?: string }) {
       } else {
         toast.error(data.message || "Logout failed");
       }
-
       // 🔹 Clear local storage & session
-      localStorage.removeItem("authToken");
+      localStorage.removeItem("authtoken");
       localStorage.removeItem("loginProvider");
       localStorage.removeItem("qrCodeImage");
+      localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("2fa-enable");
+      localStorage.removeItem("2fa-verify");
+      localStorage.removeItem("loginEmail");
 
-      // 🔹 NextAuth sign out
       await signOut({
         redirect: true,
-        callbackUrl: "/signup",
+        callbackUrl: "/login",
       });
+
+     router.push('/login')
     } catch (error) {
       console.error("Logout error:", error);
       toast.error("Something went wrong during logout");
