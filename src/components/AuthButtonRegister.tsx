@@ -2,45 +2,29 @@
 
 import { BASE_URL } from "@/lib/api/requests";
 import { signIn, getSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AuthButtonRegister() {
-  // separate processing state per button
   const [isGoogleProcessing, setIsGoogleProcessing] = useState(false);
   const [isFacebookProcessing, setIsFacebookProcessing] = useState(false);
-
-  useEffect(() => {
-  const errorData = localStorage.getItem("socialAuthError");
-  if (errorData) {
-    const { message } = JSON.parse(errorData);
-    toast.error(`${message}`);
-  }
-}, []);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSocialAuth = async (provider: "google" | "facebook") => {
-    // set processing for only the clicked provider
     if (provider === "google") setIsGoogleProcessing(true);
     if (provider === "facebook") setIsFacebookProcessing(true);
 
     try {
-      localStorage.setItem("loginProvider", provider);
-
-      // Step 1: NextAuth sign in
       const signInResult = await signIn(provider, { redirect: false });
       if (signInResult?.error) {
-         localStorage.setItem(
-        "socialAuthError",
-        JSON.stringify({ provider, message: `Failed to sign in with ${provider}` })
-      );
-        toast.error(`Failed to sign in with ${provider}`);
+        const message = `Failed to sign in with ${provider}`;
+        setErrorMessage(message);
+        toast.error(message);
         return;
       }
 
-      // Step 2: Wait for session
       let session: any = null;
-      const maxRetries = 10;
-      for (let i = 0; i < maxRetries; i++) {
+      for (let i = 0; i < 10; i++) {
         session = await getSession();
         if (session?.user?.email) break;
         await new Promise((r) => setTimeout(r, 500));
@@ -48,15 +32,11 @@ export default function AuthButtonRegister() {
 
       if (!session?.user?.email) {
         const message = "Authentication failed - no user data received";
-            localStorage.setItem(
-        "socialAuthError",
-        JSON.stringify({ provider, message })
-      );
+        setErrorMessage(message);
         toast.error(message);
         return;
       }
 
-      // Step 3: Prepare payload
       const userData = {
         first_name: session.user.name?.split(" ")[0] || "",
         last_name: session.user.name?.split(" ").slice(1).join(" ") || "",
@@ -66,7 +46,7 @@ export default function AuthButtonRegister() {
         is_google: provider === "google",
         is_facebook: provider === "facebook",
       };
-      // Step 4: API call
+
       const res = await fetch(`${BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -74,32 +54,21 @@ export default function AuthButtonRegister() {
       });
 
       const data = await res.json();
-      // if (!res.ok) throw new Error(data.message || "API request failed");
-      if (!res.ok) {
-         const message = data.message || "Registration failed";
-        localStorage.setItem(
-        "socialAuthError",
-        JSON.stringify({ provider, message })
-      );
-          toast.error(message);
-          return; // stop execution, don't redirect
-        }
-      localStorage.removeItem("socialAuthError");
-      toast.success("Registration successful!");
 
-      // Step 5: Redirect to login
+      if (!res.ok) {
+        const message = data.message || "Registration failed";
+        setErrorMessage(message);
+        toast.error(message);
+        return;
+      }
+
+      toast.success("Registration successful!");
       window.location.href = "/login";
     } catch (err: any) {
-      console.error("Auth error:", err);
-       const message = err.message || "Authentication failed";
+      const message = err.message || "Authentication failed";
+      setErrorMessage(message);
       toast.error(message);
-       localStorage.setItem(
-      "socialAuthError",
-      JSON.stringify({ provider, message })
-    );
-      localStorage.removeItem("authtoken");
     } finally {
-      // reset only the clicked button
       if (provider === "google") setIsGoogleProcessing(false);
       if (provider === "facebook") setIsFacebookProcessing(false);
     }
@@ -107,6 +76,10 @@ export default function AuthButtonRegister() {
 
   return (
     <div className="flex flex-col gap-4">
+      {errorMessage && (
+        <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+      )}
+
       <button
         onClick={() => handleSocialAuth("google")}
         disabled={isGoogleProcessing}
