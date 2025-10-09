@@ -18,7 +18,7 @@
   --color-darkblack: #000000;
   --color-paragray: #595959;
   --color-tablehead: #f8f4fd;
-  --color-completed: #1ca77f;
+  --color-completed: #1DA145;
   --color-listbg: #f9f9f9;
   --color-blue: #3b5af5;
   --color-afterline: #d0d0d0;
@@ -77,5 +77,5 @@ body {
   @apply px-[19px] py-[14px] text-sm font-semibold text-primary border border-bordercolor whitespace-nowrap;
 }
 .tbody-tr {
-  @apply px-[19px] py-4 md:py-[21px] text-sm text-paragray font-medium border border-bordercolor whitespace-nowrap;
+  @apply px-[19px] py-4 md:py-[13px] text-sm text-paragray font-medium border border-bordercolor whitespace-nowrap;
 }

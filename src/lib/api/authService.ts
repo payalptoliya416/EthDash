@@ -1,5 +1,7 @@
 import { apiRequest } from "./requests";
 import { API } from "./endpoints";
+import { adminapiRequest } from "./adminapirequest";
+import { userpiRequest } from "./userapirequest";
 
 export interface SignupData {
   first_name: string;
@@ -81,6 +83,26 @@ export interface ResetPasswordResponse {
   success: string;
 }
 
+export interface AdminLogin {
+  email : string;
+  password: string;
+}
+export interface AdminEthWallet {
+   id: number;
+  email : string;
+  case_id: string;
+}
+
+export interface AdminWalletData {
+   status: "success" | "error";
+  message: string;
+  data: AdminEthWallet;
+}
+interface Disable2FAResponse {
+  status: "success" | "error";
+  message?: string;
+}
+
 export const authService = {
   signup: (data: SignupData) =>
     apiRequest<SignupResponse>(API.REGISTER, {
@@ -109,7 +131,24 @@ export const authService = {
       body: JSON.stringify(data),
     }),
   resetPassword: (data: ResetPasswordData) =>
-    apiRequest<ResetPasswordResponse>("/reset-password", {
+    apiRequest<ResetPasswordResponse>(API.RESETPASS, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
+   disable2FA: () =>
+    userpiRequest<Disable2FAResponse>(API.DISABLE2FA, {
+      method: "POST",
+    }),
+
+    // ---admin side 
+
+      adminLogin: (data: AdminLogin) =>
+    apiRequest<LoginResponse>(API.ADMINLOGIN, {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+    adminEthWallet:  (data: AdminEthWallet) => adminapiRequest<AdminWalletData>(API.ADMINETHWALLET, {
       method: "POST",
       body: JSON.stringify(data),
     }),

@@ -80,7 +80,7 @@ const transactions: Transaction[] = [
   },
 ];
 
-export default function Transaction() {
+export default function Overview() {
   return (
       <div className="grid grid-cols-12">
         <div className="col-span-12 bg-whitelight shadow-[4px_4px_48px_0_rgba(18,18,18,0.08)] rounded-[10px]">

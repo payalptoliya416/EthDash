@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Sidebar from "@/components/Sidebar";
 import TopNavbar from "@/components/TopNavbar";
+
 interface DashboardLayoutProps {
   children: ReactNode;
 }
@@ -38,7 +39,7 @@ const contentVariants: Variants = {
     <>
       <div className="flex relative">
           <div className="hidden lg:flex">
-        <Sidebar apiType="user" />
+        <Sidebar apiType="admin" />
       </div>
       <div className="flex-1 min-h-screen bg-bgview">
            <AnimatePresence>
@@ -58,13 +59,13 @@ const contentVariants: Variants = {
               animate="visible"
               exit="exit"
               transition={{ type: "tween", duration: 0.3 }}>
-            <Sidebar apiType="user"/>
+            <Sidebar apiType="admin" />
           </motion.div>
         </div>
          )}
            </AnimatePresence>
       <div className="flex-1 flex flex-col bg-bodybg min-h-screen" >
-        <TopNavbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} apiType='user' />
+        <TopNavbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)}  apiType='admin' />
         <motion.main className="p-4 md:p-[25px] flex-1" 
          variants={contentVariants}
         initial="hidden"

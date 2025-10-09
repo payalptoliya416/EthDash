@@ -124,12 +124,13 @@ const clientTransactionList: clientTransaction[] = [
 ]
 
 export default function ActiveClient() {
+    
   return (
       <div className="grid grid-cols-12">
              <div className="col-span-12 bg-whitelight shadow-[4px_4px_48px_0_rgba(18,18,18,0.08)] rounded-[10px]">
            <div className="flex justify-between items-center p-5 flex-wrap gap-5">
             <h3 className="box-title">Transactions History</h3>
-             <a href="/activeclient/addclient" className="bg-purple rounded py-[10px] px-5 text-whitelight flex gap-2 items-center text-base leading-[16px] font-medium"><PlusIcon className="w-5 h-5"/> Add Client</a>
+             <a href="/admin/active-clients/add-client" className="bg-purple rounded py-[10px] px-5 text-whitelight flex gap-2 items-center text-base leading-[16px] font-medium"><PlusIcon className="w-5 h-5"/> Add Client</a>
            </div>
             <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -164,11 +165,11 @@ export default function ActiveClient() {
                   <td className="tbody-tr">{tx.clientName}</td>
                   <td className="tbody-tr">{tx.caseId}</td>
                   <td className="tbody-tr">
-                    <span className={`py-2 text-center rounded-md text-white w-[105px] font-normal text-sm leading-[14px] ${tx.walletStatus === 'Active' ?  "bg-completed":"bg-yellow"} `}>  {tx.walletStatus}</span>
+                    <span className={`py-2 inline-block text-center rounded-md text-white w-[105px] font-normal text-sm leading-[14px] ${tx.walletStatus === 'Active' ?  "bg-completed":"bg-yellow"} `}>  {tx.walletStatus}</span>
                   </td>
                   <td className="tbody-tr">{tx.usdt}</td>
                   <td className="tbody-tr">
-                     <span className={`py-2 text-center rounded-md text-white w-[60px] font-normal text-sm leading-[14px] ${tx.bankAccount === 'Yes' ?  "bg-blue":"bg-red"} `}>  {tx.bankAccount}</span>
+                     <span className={`py-2 text-center inline-block rounded-md text-white w-[60px] font-normal text-sm leading-[14px] ${tx.bankAccount === 'Yes' ?  "bg-blue":"bg-red"} `}>  {tx.bankAccount}</span>
                   </td>
                   <td className="tbody-tr">{tx.ethBalance}</td>
                 </tr>

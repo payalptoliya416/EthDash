@@ -5,9 +5,10 @@ import { Fragment } from "react";
 import LogoutButton from "./LogoutButton";
 interface TopNavbarProps {
   toggleSidebar: () => void;
+   apiType: "admin" | "user";
 }
 
-export default function TopNavbar({ toggleSidebar }: TopNavbarProps) {
+export default function TopNavbar({ toggleSidebar ,apiType }: TopNavbarProps) {
   return (
     <header className="w-full bg-white shadow flex justify-between items-center px-6 py-3 md:py-5 sticky top-0 z-[9]">
       <div className="flex items-center gap-4">
@@ -50,6 +51,7 @@ export default function TopNavbar({ toggleSidebar }: TopNavbarProps) {
                 {({ active }) => (
                   <LogoutButton
                     className={`w-full text-left cursor-pointer ${active ? "bg-gray-100" : ""}`}
+                    apiType={apiType}
                   />
                 )}
               </Menu.Item>

@@ -2,16 +2,24 @@
 
 import { BASE_URL } from "@/lib/api/requests";
 import { signIn, getSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
 export default function AuthButtonLogin() {
-  // separate processing state per button
   const [isGoogleProcessing, setIsGoogleProcessing] = useState(false);
   const [isFacebookProcessing, setIsFacebookProcessing] = useState(false);
 
+  // Remove Facebook's #_=_ if present
+  useEffect(() => {
+    if (window.location.hash === "#_=_") {
+  history.replaceState
+    ? history.replaceState({}, document.title, window.location.href.split("#")[0])
+    : (window.location.hash = "");
+}
+
+  }, []);
+
   const handleSocialAuth = async (provider: "google" | "facebook") => {
-    // set processing for only the clicked provider
     if (provider === "google") setIsGoogleProcessing(true);
     if (provider === "facebook") setIsFacebookProcessing(true);
 
@@ -19,11 +27,13 @@ export default function AuthButtonLogin() {
       localStorage.setItem("loginProvider", provider);
 
       const signInResult = await signIn(provider, { redirect: false });
+
       if (signInResult?.error) {
         toast.error(`Failed to sign in with ${provider}`);
         return;
       }
 
+      // Wait for session to populate
       let session: any = null;
       const maxRetries = 10;
       for (let i = 0; i < maxRetries; i++) {
@@ -43,6 +53,7 @@ export default function AuthButtonLogin() {
         is_google: provider === "google",
         is_facebook: provider === "facebook",
       };
+
       const response = await fetch(`${BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,29 +61,36 @@ export default function AuthButtonLogin() {
       });
 
       const data = await response.json();
-    //   if (!response.ok) throw new Error(data.message || "API request failed");
-        if (!response.ok) {
-            toast.error(data.message || "Login failed"); // show error
-            return; // stop execution, don't redirect
-        }
-        
-      localStorage.setItem("loginEmail", data.user?.email);
+
+      if (!response.ok) {
+        toast.error(data.message || "Login failed");
+        return;
+      }
+
+      const email = data.user?.email || data.email;
+      if (email) localStorage.setItem("loginEmail", email);
       localStorage.setItem("authtoken", data.token || data.access_token);
 
-      toast.success('Login successful!');
+      toast.success("Login successful!");
+
+      // Redirect after removing Facebook hash (if any)
+     if (window.location.hash === "#_=_") {
+  history.replaceState
+    ? history.replaceState({}, document.title, window.location.href.split("#")[0])
+    : (window.location.hash = "");
+}
+
 
       if (data["2_fa"]) {
         window.location.href = "/login/verification";
       } else {
         window.location.href = "/overview";
       }
-
     } catch (err: any) {
       console.error("Auth error:", err);
       toast.error(err.message || "Authentication failed");
       localStorage.removeItem("authtoken");
     } finally {
-      // reset only the clicked button
       if (provider === "google") setIsGoogleProcessing(false);
       if (provider === "facebook") setIsFacebookProcessing(false);
     }

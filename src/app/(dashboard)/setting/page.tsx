@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 import { BASE_URL } from "@/lib/api/requests";
+import { authService } from "@/lib/api/authService";
 
 interface Enable2FAResponse {
   status: "success" | "error";
@@ -51,49 +52,63 @@ function Settings() {
   }, [session]);
 
   // ✅ Handle 2FA toggle
-  const handleToggle = async () => {
+ const handleToggle = async () => {
     const newValue = !twoFactorEnabled;
-    setTwoFactorEnabled(newValue);
-
     const token = localStorage.getItem("authtoken");
+
     if (!token) {
       toast.error("No auth token found!");
       return;
     }
 
     setLoading(true);
+
     try {
-      const res = await fetch(`${BASE_URL}/enable-2fa`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ enabled: newValue }),
-      });
-
-      const data: Enable2FAResponse = await res.json();
-
-      if (data.status === "success") {
-        toast.success(
-          data.message || `Two-Factor ${newValue ? "Enabled" : "Disabled"} successfully`
-        );
-        if (newValue && data.qr_code_image) {
-          localStorage.setItem("qrCodeImage", data.qr_code_image);
-          router.push("/setting/show-qr");
+      if (!newValue) {
+        // Disable 2FA
+        const res = await authService.disable2FA();
+        if (res.status === "success") {
+          toast.success(res.message || "2FA disabled successfully");
+          setTwoFactorEnabled(false);
+          localStorage.setItem("2fa-enable", "false");
+        } else {
+          toast.error(res.message || "Failed to disable 2FA");
+          setTwoFactorEnabled(true);
         }
       } else {
-        toast.error(data.message || "Something went wrong");
-        setTwoFactorEnabled(!newValue);
+        // Enable 2FA
+        const res = await fetch(`${BASE_URL}/enable-2fa`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ enabled: true }),
+        });
+
+        const data: Enable2FAResponse = await res.json();
+
+        if (data.status === "success") {
+          toast.success(data.message || "2FA enabled successfully");
+
+          if (data.qr_code_image) {
+            localStorage.setItem("qrCodeImage", data.qr_code_image);
+            router.push("/setting/show-qr");
+          }
+        } else {
+          toast.error(data.message || "Failed to enable 2FA");
+          setTwoFactorEnabled(false);
+        }
       }
     } catch (error) {
       console.error(error);
       toast.error("Network error");
-      setTwoFactorEnabled(!newValue);
+      setTwoFactorEnabled(twoFactorEnabled); // revert toggle
     } finally {
       setLoading(false);
     }
   };
+
 
   // ✅ Password form
   const initialValues = {
@@ -150,7 +165,7 @@ function Settings() {
     <div className="grid grid-cols-12 gap-7">
       {/* Two-Factor Section */}
       <div className="common-bg col-span-6">
-        <h3 className="text-xl font-semibold text-gray-700 mb-6">Two-Factor Verification</h3>
+        <h3 className="text-xl font-semibold text-gray-700 mb-6">Enable Two Factor Authentication</h3>
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <span className="text-gray-600 font-medium">Enable Two-Factor</span>
@@ -171,7 +186,7 @@ function Settings() {
       </div>
 
       {/* ✅ Show Set Password form only if user logged in via Google or Facebook */}
-      {(loginProvider === "google" || loginProvider === "facebook") && (
+      {/* {(loginProvider === "google" || loginProvider === "facebook") && (
         <div className="common-bg col-span-7 p-6">
           <p className="mb-4">
             Logged in with{" "}
@@ -186,7 +201,6 @@ function Settings() {
           >
             {({ isSubmitting }) => (
               <Form>
-                {/* Password */}
                 <div className="mb-5">
                   <label className="block text-base font-normal mb-2">Password</label>
                   <div className="relative">
@@ -211,7 +225,6 @@ function Settings() {
                   <ErrorMessage name="password" component="div" className="text-red-500 text-sm mt-1" />
                 </div>
 
-                {/* Confirm Password */}
                 <div className="mb-5">
                   <label className="block text-base font-normal mb-2">Confirm Password</label>
                   <div className="relative">
@@ -251,7 +264,7 @@ function Settings() {
             )}
           </Formik>
         </div>
-      )}
+     )}  */}
     </div>
   );
 }
