@@ -1,8 +1,7 @@
 "use client";
 
 import { BASE_URL } from "@/lib/api/requests";
-import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";  
 import toast from "react-hot-toast";
 
 interface LogoutButtonProps {
@@ -11,64 +10,6 @@ interface LogoutButtonProps {
 }
 
 export default function LogoutButton({ apiType = "user", className }: LogoutButtonProps) {
-  const router = useRouter();
-  
-  // const handleLogout = async () => {
-  //   try {
-  //      const tokenKey = apiType === "admin" ? "admin-authtoken" : "authtoken";
-  //     const token = localStorage.getItem(tokenKey);
-
-  //     if (!token) {
-  //       toast.error("No token found. Please login again.");
-  //       // await signOut({ redirect: true, callbackUrl: "/signup" });
-  //       return;
-  //     }
-  //     const logoutEndpoint = apiType === "admin" ? `${BASE_URL}/admin/logout` : `${BASE_URL}/logout`;
-  //     const res = await fetch(logoutEndpoint, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (res.ok) {
-  //       toast.success(data.message || "Logged out successfully");
-  //     } else {
-  //       toast.error(data.message || "Logout failed");
-  //     }
-  //     // 🔹 Clear local storage & session
-      
-     
-  //     localStorage.removeItem("loginProvider");
-  //     localStorage.removeItem("qrCodeImage");
-  //     localStorage.removeItem("2fa-enable");
-  //     localStorage.removeItem("2fa-verify");
-  //     localStorage.removeItem("loginEmail");
-
-  //    if(apiType === "admin"){
-  //     localStorage.removeItem("admin-authtoken");
-  //      router.push('/admin-login')
-  //        await signOut({
-  //       redirect: true,
-  //       callbackUrl: "/admin-login",
-  //     });
-  //    }else{
-  //      localStorage.removeItem("authtoken");
-  //      router.push('/login')
-  //        await signOut({
-  //       redirect: true,
-  //       callbackUrl: "/login",
-  //     });
-  //    }
-
-  //   } catch (error) {
-  //     console.error("Logout error:", error);
-  //     toast.error("Something went wrong during logout");
-  //   }
-  // };
 
 const handleLogout = async () => {
   try {

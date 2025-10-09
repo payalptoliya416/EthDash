@@ -77,5 +77,5 @@ body {
   @apply px-[19px] py-[14px] text-sm font-semibold text-primary border border-bordercolor whitespace-nowrap;
 }
 .tbody-tr {
-  @apply px-[19px] py-4 md:py-[13px] text-sm text-paragray font-medium border border-bordercolor whitespace-nowrap;
+  @apply px-[19px] py-4 md:py-[21px] text-sm text-paragray font-medium border border-bordercolor whitespace-nowrap;
 }

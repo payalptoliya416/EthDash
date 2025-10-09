@@ -1,98 +1,32 @@
 "use client";
 
-import { BASE_URL } from "@/lib/api/requests";
-import { signIn, getSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AuthButtonLogin() {
   const [isGoogleProcessing, setIsGoogleProcessing] = useState(false);
   const [isFacebookProcessing, setIsFacebookProcessing] = useState(false);
 
-  // Remove Facebook's #_=_ if present
-  useEffect(() => {
-    if (window.location.hash === "#_=_") {
-  history.replaceState
-    ? history.replaceState({}, document.title, window.location.href.split("#")[0])
-    : (window.location.hash = "");
-}
-
-  }, []);
-
   const handleSocialAuth = async (provider: "google" | "facebook") => {
-    if (provider === "google") setIsGoogleProcessing(true);
-    if (provider === "facebook") setIsFacebookProcessing(true);
-
     try {
-      localStorage.setItem("loginProvider", provider);
+      if (provider === "google") setIsGoogleProcessing(true);
+      if (provider === "facebook") setIsFacebookProcessing(true);
 
-      const signInResult = await signIn(provider, { redirect: false });
-
-      if (signInResult?.error) {
-        toast.error(`Failed to sign in with ${provider}`);
-        return;
-      }
-
-      // Wait for session to populate
-      let session: any = null;
-      const maxRetries = 10;
-      for (let i = 0; i < maxRetries; i++) {
-        session = await getSession();
-        if (session?.user?.email) break;
-        await new Promise((r) => setTimeout(r, 500));
-      }
-
-      if (!session?.user?.email) {
-        toast.error("Authentication failed - no user data received");
-        return;
-      }
-
-      const userData = {
-        email: session.user.email,
-        password: "",
-        is_google: provider === "google",
-        is_facebook: provider === "facebook",
-      };
-
-      const response = await fetch(`${BASE_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+      const result = await signIn(provider, {
+        redirect: true,
+        callbackUrl: "/login/social/callback", // 👈 redirect here
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        toast.error(data.message || "Login failed");
-        return;
-      }
-
-      const email = data.user?.email || data.email;
-      if (email) localStorage.setItem("loginEmail", email);
-      localStorage.setItem("authtoken", data.token || data.access_token);
-
-      toast.success("Login successful!");
-
-      // Redirect after removing Facebook hash (if any)
-     if (window.location.hash === "#_=_") {
-  history.replaceState
-    ? history.replaceState({}, document.title, window.location.href.split("#")[0])
-    : (window.location.hash = "");
-}
-
-
-      if (data["2_fa"]) {
-        window.location.href = "/login/verification";
-      } else {
-        window.location.href = "/overview";
+      if (result?.error) {
+        toast.error(`Failed to sign in with ${provider}`);
       }
     } catch (err: any) {
       console.error("Auth error:", err);
-      toast.error(err.message || "Authentication failed");
-      localStorage.removeItem("authtoken");
+      toast.error("Authentication failed. Please try again.");
     } finally {
-      if (provider === "google") setIsGoogleProcessing(false);
-      if (provider === "facebook") setIsFacebookProcessing(false);
+      setIsGoogleProcessing(false);
+      setIsFacebookProcessing(false);
     }
   };
 
