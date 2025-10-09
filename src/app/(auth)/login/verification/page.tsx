@@ -1,6 +1,6 @@
 "use client";
 
-import { Formik, Form, Field, FormikHelpers, ErrorMessage } from "formik";
+import { Formik, Form, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import { JSX, useEffect, useState } from "react";
@@ -135,8 +135,11 @@ const handleSubmit = async (
           </a>
         </div>
 
-        <div className=" auth-container">
-          <h1 className="auth-heading">Google Authenticator Code</h1>
+        <div className=" auth-container text-center">
+           <h1 className="auth-heading">Google Authenticator Code</h1>
+          <p className="auth-para">
+          Enter 6-digit Google Authenticator code to continue.
+          </p>
 
           {/* Formik OTP Form */}
           <Formik enableReinitialize initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
@@ -145,8 +148,7 @@ const handleSubmit = async (
                 <div className="mt-[35px] mb-10">
 
                   {/* OTP Inputs */}
-                   <label className="block text-base font-normal mb-[10px]">OTP</label>
-                  <div className="flex items-center gap-[15px]">
+                  <div className="flex items-center justify-center gap-[15px]">
                     {values.otp.map((_, index) => (
                       <Field
                         key={index}

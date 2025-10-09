@@ -2,13 +2,21 @@
 
 import { BASE_URL } from "@/lib/api/requests";
 import { signIn, getSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AuthButtonRegister() {
   // separate processing state per button
   const [isGoogleProcessing, setIsGoogleProcessing] = useState(false);
   const [isFacebookProcessing, setIsFacebookProcessing] = useState(false);
+
+  useEffect(() => {
+  const errorData = localStorage.getItem("socialAuthError");
+  if (errorData) {
+    const { message } = JSON.parse(errorData);
+    toast.error(`${message}`);
+  }
+}, []);
 
   const handleSocialAuth = async (provider: "google" | "facebook") => {
     // set processing for only the clicked provider
@@ -21,6 +29,10 @@ export default function AuthButtonRegister() {
       // Step 1: NextAuth sign in
       const signInResult = await signIn(provider, { redirect: false });
       if (signInResult?.error) {
+         localStorage.setItem(
+        "socialAuthError",
+        JSON.stringify({ provider, message: `Failed to sign in with ${provider}` })
+      );
         toast.error(`Failed to sign in with ${provider}`);
         return;
       }
@@ -35,7 +47,12 @@ export default function AuthButtonRegister() {
       }
 
       if (!session?.user?.email) {
-        toast.error("Authentication failed - no user data received");
+        const message = "Authentication failed - no user data received";
+            localStorage.setItem(
+        "socialAuthError",
+        JSON.stringify({ provider, message })
+      );
+        toast.error(message);
         return;
       }
 
@@ -58,18 +75,28 @@ export default function AuthButtonRegister() {
 
       const data = await res.json();
       // if (!res.ok) throw new Error(data.message || "API request failed");
-if (!res.ok) {
-    toast.error(data.message || "Registration failed");
-    return; // stop execution, don't redirect
-  }
-
+      if (!res.ok) {
+         const message = data.message || "Registration failed";
+        localStorage.setItem(
+        "socialAuthError",
+        JSON.stringify({ provider, message })
+      );
+          toast.error(message);
+          return; // stop execution, don't redirect
+        }
+      localStorage.removeItem("socialAuthError");
       toast.success("Registration successful!");
 
       // Step 5: Redirect to login
       window.location.href = "/login";
     } catch (err: any) {
       console.error("Auth error:", err);
-      toast.error(err.message || "Authentication failed");
+       const message = err.message || "Authentication failed";
+      toast.error(message);
+       localStorage.setItem(
+      "socialAuthError",
+      JSON.stringify({ provider, message })
+    );
       localStorage.removeItem("authtoken");
     } finally {
       // reset only the clicked button
