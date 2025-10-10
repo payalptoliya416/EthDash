@@ -1,78 +1,13 @@
 "use client";
 
-import { BASE_URL } from "@/lib/api/requests";
-import { signIn, getSession } from "next-auth/react";
+import { signIn,  } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AuthButtonRegister() {
   const [isGoogleProcessing, setIsGoogleProcessing] = useState(false);
   const [isFacebookProcessing, setIsFacebookProcessing] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // const handleSocialAuth = async (provider: "google" | "facebook") => {
-  //   if (provider === "google") setIsGoogleProcessing(true);
-  //   if (provider === "facebook") setIsFacebookProcessing(true);
-
-  //   try {
-  //     const signInResult = await signIn(provider, { redirect: false });
-  //     if (signInResult?.error) {
-  //       const message = `Failed to sign in with ${provider}`;
-  //       setErrorMessage(message);
-  //       toast.error(message);
-  //       return;
-  //     }
-
-  //     let session: any = null;
-  //     for (let i = 0; i < 10; i++) {
-  //       session = await getSession();
-  //       if (session?.user?.email) break;
-  //       await new Promise((r) => setTimeout(r, 500));
-  //     }
-
-  //     if (!session?.user?.email) {
-  //       const message = "Authentication failed - no user data received";
-  //       setErrorMessage(message);
-  //       toast.error(message);
-  //       return;
-  //     }
-
-  //     const userData = {
-  //       first_name: session.user.name?.split(" ")[0] || "",
-  //       last_name: session.user.name?.split(" ").slice(1).join(" ") || "",
-  //       email: session.user.email,
-  //       password: "",
-  //       confirm_password: "",
-  //       is_google: provider === "google",
-  //       is_facebook: provider === "facebook",
-  //     };
-
-  //     const res = await fetch(`${BASE_URL}/register`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(userData),
-  //     });
-
-  //     const data = await res.json();
-
-  //     if (!res.ok) {
-  //       const message = data.message || "Registration failed";
-  //       setErrorMessage(message);
-  //       toast.error(message);
-  //       return;
-  //     }
-
-  //     toast.success("Registration successful!");
-  //     window.location.href = "/login";
-  //   } catch (err: any) {
-  //     const message = err.message || "Authentication failed";
-  //     setErrorMessage(message);
-  //     toast.error(message);
-  //   } finally {
-  //     if (provider === "google") setIsGoogleProcessing(false);
-  //     if (provider === "facebook") setIsFacebookProcessing(false);
-  //   }
-  // };
 const handleSocialAuth = async (provider: "google" | "facebook") => {
   try {
     localStorage.setItem("loginProvider", provider);
@@ -92,9 +27,6 @@ const handleSocialAuth = async (provider: "google" | "facebook") => {
 
   return (
     <div className="flex flex-col gap-4">
-      {errorMessage && (
-        <p className="text-red-500 text-sm text-center">{errorMessage}</p>
-      )}
 
       <button
         onClick={() => handleSocialAuth("google")}
