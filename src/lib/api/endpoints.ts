@@ -10,6 +10,10 @@ export const API = {
 
   DISABLE2FA: '/disable-2fa',
 
+  // --bannk 
+  COUNTRY_GET:'/country',
+  CREATE_BANK_ACCOUNT:'/bank/create',
+
   // --admin side
   ADMINLOGIN: '/admin/login',
   ADMINETHWALLET : '/admin/eth-wallet',

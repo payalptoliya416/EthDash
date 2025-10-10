@@ -102,6 +102,29 @@ interface Disable2FAResponse {
   status: "success" | "error";
   message?: string;
 }
+interface Country {
+  id: number;
+  country_name: string;
+}
+
+interface CountryGetRes {
+  status: "success" | "error"; 
+  data: Country[];
+}
+
+export interface CreatedBankDetail {
+  country: number;              
+  account_number: string;      
+  sort_code?: string;         
+  transit_number?: string;     
+  institution_number?: string;  
+  iban?: string;               
+  swift_code?: string;         
+}
+interface CountryGetRes {
+  status: "success" | "error"; 
+  message: string;
+}
 
 export const authService = {
   signup: (data: SignupData) =>
@@ -139,6 +162,17 @@ export const authService = {
    disable2FA: () =>
     userpiRequest<Disable2FAResponse>(API.DISABLE2FA, {
       method: "POST",
+    }),
+
+    // --bannk 
+    countryGet: () =>
+    userpiRequest<CountryGetRes>(API.COUNTRY_GET, {
+      method: "GET",
+    }),
+    submitBankDetails: (data : CreatedBankDetail) =>
+    userpiRequest<CountryGetRes>(API.CREATE_BANK_ACCOUNT, {
+      method: "POST",
+      body: JSON.stringify(data),
     }),
 
     // ---admin side 
