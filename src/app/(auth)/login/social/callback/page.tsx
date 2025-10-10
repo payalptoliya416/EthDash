@@ -24,7 +24,7 @@ export default function SocialLoginCallbackPage() {
         is_google: provider === "google",
         is_facebook: provider === "facebook",
       };
-
+localStorage.setItem("dadada",JSON.stringify(userData))
       try {
         const res = await fetch(`${BASE_URL}/login`, {
           method: "POST",
@@ -33,7 +33,7 @@ export default function SocialLoginCallbackPage() {
         });
 
         const data = await res.json();
-
+localStorage.setItem("rererre", JSON.stringify(data))
         if (!res.ok) throw new Error(data.message || "Login failed");
 
         // Save token and email

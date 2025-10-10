@@ -10,6 +10,7 @@ export default function AuthButtonLogin() {
 
   const handleSocialAuth = async (provider: "google" | "facebook") => {
     try {
+      localStorage.setItem("loginProvider", provider);
       if (provider === "google") setIsGoogleProcessing(true);
       if (provider === "facebook") setIsFacebookProcessing(true);
 
