@@ -36,10 +36,10 @@ const route = useRouter();
         const payload = { case_id: values.case_id, email: values.email };
         const res = await authService.adminEthWallet(payload as any);
          if (res.status === "success") {
-      route.push('/admin/active-clients/add-client/wallet')
-      } else {
+             toast.success(res.message || "Something went wrong");
+       } else {
         toast.error(res.message || "Something went wrong");
-      }
+       }
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors: Record<string, string> = {};

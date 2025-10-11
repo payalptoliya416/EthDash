@@ -125,6 +125,60 @@ interface CountryGetRes {
   status: "success" | "error"; 
   message: string;
 }
+interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
+interface ActionData {
+  id: number;
+  user_id: number;
+  action: string;
+  created_at: string;
+  updated_at: string;
+  user: User;
+}
+
+interface ApiResponse {
+  status: "success" | "error";
+  data: ActionData[];
+}
+interface ApiActiveClientResponse {
+  status: string;
+  data: {
+    id: number;
+    user_id: number;
+    case_id: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    status: "Active" | "Inactive";
+    bank: "Yes" | "No";
+    sdt_balance: number;
+    eth_balance: number;
+  }[];
+}
+
+interface UserHistoryItem {
+  id: number;
+  user_id: number;
+  action: string;
+  created_at: string; // ISO string
+  updated_at: string; // ISO string
+}
+interface UserHistoryResponse {
+  status: "success" | "error";
+  data: UserHistoryItem[];
+}
+interface UsdtBalanceItem {
+   usdt_balance : Number
+}
+interface UsdtBalance {
+  status: "success" | "error";
+  data: UsdtBalanceItem;
+}
 
 export const authService = {
   signup: (data: SignupData) =>
@@ -169,6 +223,14 @@ export const authService = {
     userpiRequest<CountryGetRes>(API.COUNTRY_GET, {
       method: "GET",
     }),
+    historyUser: () =>
+    userpiRequest<UserHistoryResponse>(API.USER_HISTORY, {
+      method: "GET",
+    }),
+    usddtBalance: () =>
+    userpiRequest<UsdtBalance>(API.USDT_BALANCE, {
+      method: "GET",
+    }),
     submitBankDetails: (data : CreatedBankDetail) =>
     userpiRequest<CountryGetRes>(API.CREATE_BANK_ACCOUNT, {
       method: "POST",
@@ -185,5 +247,11 @@ export const authService = {
     adminEthWallet:  (data: AdminEthWallet) => adminapiRequest<AdminWalletData>(API.ADMINETHWALLET, {
       method: "POST",
       body: JSON.stringify(data),
+    }),
+    historyGet:  () => adminapiRequest<ApiResponse>(API.HISTROY, {
+      method: "GET",
+    }),
+    activeClient:  () => adminapiRequest<ApiActiveClientResponse>(API.ACTIVE_CLIENT, {
+      method: "GET",
     }),
 };

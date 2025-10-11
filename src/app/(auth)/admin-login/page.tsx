@@ -15,13 +15,13 @@ export default function Login(): JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem("authtoken");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("authtoken");
 
-    if (token) {
-      router.replace("/overview");
-    }
-  }, [router]);
+  //   if (token) {
+  //     router.replace("/overview");
+  //   }
+  // }, [router]);
 
   const validationSchema = Yup.object({
     email: Yup.string().email("Invalid email").required("Email is required"),

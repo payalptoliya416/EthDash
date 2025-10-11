@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import OverviewPageWrapper from "@/components/OverviewPageWrapper";
+import { authService } from "@/lib/api/authService";
 
 type Transaction = {
   id: number;
@@ -23,6 +24,16 @@ type Transaction = {
 interface DepositFormValues {
   ethBalance: string;
   usdValue: string;
+}
+interface UserHistoryItem {
+  id: number;
+  user_id: number;
+  action: string;
+  created_at: string;
+  updated_at: string;
+}
+interface UsdtBalanceItem {
+   usdt_balance : number
 }
 
 const transactions: Transaction[] = [
@@ -90,6 +101,9 @@ const DepositSchema = Yup.object().shape({
 function Overview() {
   const [showContract, setShowContract] = useState(false);
   const [showEth, setShowEth] = useState(false);
+const [history, setHistory] = useState<UserHistoryItem[]>([]);
+  const [loading, setLoading] = useState(true);
+const [usdData, setUsdData] = useState<any>(0);
 
   const contractAddress = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
   const ethAddress = "0x....23123123132131dsada";
@@ -103,7 +117,44 @@ function Overview() {
     }
   };
 
+
    const initialValues: DepositFormValues = { ethBalance: '', usdValue: '' };
+
+ useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const res = await authService.historyUser();
+        if (res.status === "success") {
+          setHistory(res.data);
+        }
+      } catch (err) {
+        console.error("Error fetching history:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHistory();
+  }, []);
+
+
+useEffect(() => {
+  const fetchUSDData = async () => {
+    try {
+      const res = await authService.usddtBalance();
+      if (res.status === "success") {
+        console.log("data",res.data)
+        setUsdData(res.data);
+      }
+    } catch (err) {
+      console.error("Error fetching history:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchUSDData();
+}, []);
 
   const handleSubmit = (
     values: DepositFormValues,
@@ -120,13 +171,16 @@ function Overview() {
         <div className="common-bg mb-5">
         <div className="flex justify-between items-center mb-[15px]">
             <h3 className="box-title">Smart Contract Details</h3>
-            <span className="inline-block rounded-[4px] bg-yellow px-5 py-2 text-sm font-medium text-accetgray">  Pending</span>
+            <span className="inline-block rounded-[4px] bg-yellow px-5 py-2 text-sm font-medium text-accetgray">  {usdData.status}</span>
         </div>
         <div>
             <h3 className="text-lg font-medium mb-[10px] text-accetgray">Recovered Funds Balance</h3>
             <div className="flex gap-[10px] items-center mb-3"> 
                  <div><Image src="/t1.png" alt="funds" width={24} height={24}/></div>
-                <h2 className="text-purple text-[28px] leading-[28px] font-bold">1.00 USDT</h2>
+              
+          <div className="text-purple text-[28px] leading-[28px] font-bold">
+            {usdData.usdt_balance} USDT
+          </div>
             </div>
             <div className="flex items-center flex-wrap gap-2">
                 <span className="text-sm leading-[14px] font-medium mr-[10px] text-darkblack">Smart contract address :</span>
@@ -247,26 +301,29 @@ function Overview() {
       </div>
       <div className="col-span-12 xl:col-span-5 common-bg">
          <h3 className="box-title">Notifications History</h3>
-         <div className="border border-bordercolor p-[15px] rounded mt-5">
-               <h3 className="text-sm leading-[14px]  text-primary mb-[10px] font-medium ">Deposit Successful: 15,623.05 USDT</h3>
-               <p className="text-paragray text-xs leading-[12px] font-normal">Jun 24, 2025 - 15:56</p>
-         </div>
-         <div className="border border-bordercolor p-[15px] rounded mt-[15px]">
-               <h3 className="text-sm leading-[14px]  text-primary mb-[10px] font-medium ">Smart Contract Updated</h3>
-               <p className="text-paragray text-xs leading-[12px] font-normal">Jun 20, 2025 - 10:45</p>
-         </div>
-         <div className="border border-bordercolor p-[15px] rounded mt-[15px]">
-               <h3 className="text-sm leading-[14px]  text-primary mb-[10px] font-medium ">Error: ETH Deposit Required</h3>
-               <p className="text-paragray text-xs leading-[12px] font-normal">Jun 18, 2025 - 20:15</p>
-         </div>
-         <div className="border border-bordercolor p-[15px] rounded mt-[15px]">
-               <h3 className="text-sm leading-[14px]  text-primary mb-[10px] font-medium ">Deposit Successful: 15,623.05 USDT</h3>
-               <p className="text-paragray text-xs leading-[12px] font-normal">Jun 15, 2025 - 09:35</p>
-         </div>
-         <div className="border border-bordercolor p-[15px] rounded mt-[15px]">
-               <h3 className="text-sm leading-[14px]  text-primary mb-[10px] font-medium ">Smart Contract Updated</h3>
-               <p className="text-paragray text-xs leading-[12px] font-normal">Jun 20, 2025 - 10:45</p>
-         </div>
+           {history.map((item) => (
+        <div
+          key={item.id}
+          className="border border-bordercolor p-[15px] rounded mt-5"
+        >
+          <h3 className="text-sm leading-[14px] text-primary mb-[10px] font-medium">
+            {item.action}
+          </h3>
+          <p className="text-paragray text-xs leading-[12px] font-normal">
+            {new Date(item.created_at).toLocaleDateString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {new Date(item.created_at).toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            })}
+          </p>
+        </div>
+      ))}
       </div>
       <div className="col-span-12 bg-whitelight shadow-[4px_4px_48px_0_rgba(18,18,18,0.08)] rounded-[10px]">
        <h3 className="box-title p-5">Transactions History</h3>
